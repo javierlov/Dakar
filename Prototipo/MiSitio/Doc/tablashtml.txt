@@ -1,0 +1,1268 @@
+Publicidad - Hosting barato en MasBaratoImposible.com - 2000 MB, 25 GB, 1,95 euros/mes
+hosting barato
+ anterior  siguiente  contenidos  elementos  atributos  índice
+11 Tablas
+
+Nota: Este documento es parte de una traducción al castellano de la Recomendación del W3C "HTML 4.01 Specification" (más información). Puede consultar la versión original del mismo. Para cualquier comentario o corrección acerca de la traducción póngase en contacto con el traductor en jrpozo@conclase.net. Gracias por su colaboración.
+
+Véase el Aviso de copyright de la traducción.
+
+Contenidos
+
+   1. Introducción a las tablas
+   2. Elementos para construir tablas
+         1. El elemento TABLE
+                * Direccionalidad de tablas
+         2. Títulos de tablas: el elemento CAPTION
+         3. Grupos de filas: los elementos THEAD, TFOOT y TBODY
+         4. Grupos de columnas: los elementos COLGROUP y COL
+                * El elemento COLGROUP
+                * El elemento COL
+                * Cálculo del número de columnas de una tabla
+                * Cálculo de la anchura de las columnas
+         5. Filas de una tabla: el elemento TR
+         6. Celdas de una tabla: los elementos TH y TD
+                * Celdas que abarcan varias filas o columnas
+   3. Formato de tablas por agentes de usuario visuales
+         1. Bordes y líneas de división
+         2. Alineación horizontal y vertical
+                * Herencia de las especificaciones de alineación
+         3. Márgenes de las celdas
+   4. Representación de tablas por agentes de usuario no visuales
+         1. Asociación de información de encabezado con celdas de datos
+         2. Categorización de celdas
+         3. Algoritmo para encontrar información de encabezado
+   5. Tabla de muestra
+
+11.1 Introducción a las tablas
+
+El modelo de tablas de HTML permite a los autores organizar datos -- textos, texto preformateado, imágenes, vínculos, formularios, campos de formularios, otras tablas, etc. -- en filas y en columnas de celdas.
+
+Cada tabla puede tener un título asociado (ver el elemento CAPTION) que proporciona una descripción corta del propósito de de la tabla. Se puede proporcionar también una descripción más larga (por medio del atributo summary) para el provecho de las personas que utilicen agentes de usuario basados en Braille o en voz.
+
+Las filas de una tabla pueden agruparse en secciones de encabezado, pie y cuerpo, (por medio de los elementos THEAD, TFOOT y TBODY, respectivamente). Los grupos de filas conllevan información estructural adicional y los agentes de usuario los pueden representar de modo que se enfatice esta estructura. Los agentes de usuario pueden sacar partido de la división entre encabezado, cuerpo y pie para permitir el desplazamiento de las secciones de cuerpo independientemente de las secciones de cabecera y pie. Cuando se imprimen tablas largas, se puede repetir en cada página la información de cabecera y pie que contienen los datos de la tabla.
+
+Los autores también pueden agrupar columnas para proporcionar información estructural adicional de la que pueden sacar partido los agentes de usuario. Además de esto, los autores pueden declarar propiedades de columnas al comienzo de la definición de la tabla (por medio de los elementos COLGROUP y COL) de tal modo que se permita a los agentes de usuario representar la tabla incrementalmente en lugar de tener que esperar a que lleguen todos los datos de la tabla antes de empezar a representarla.
+
+Las celdas de la tabla puede contener o bien información de "encabezado" (ver el elemento TH) o de "datos" (ver el elemento TD). Las celdas pueden ocupar varias filas y columnas. El modelo de tablas de HTML 4 permite a los autores dar un rótulo a cada celda de modo que los agentes de usuario no visuales puedan comunicar más fácilmente información de encabezado de la celda al usuario. Estos mecanismos no sólo ayudan considerablemente a los usuarios con discapacidades visuales, sino que además permiten manejar tablas a navegadores multi-modo sin cables con posibilidades de representación limitadas (p.ej., teléfonos con soporte web).
+
+No deberían usarse tablas con la única finalidad de organizar la presentación de los contenidos de un documento (es decir, de crear el "layout"), ya que esto puede ocasionar problemas cuando se represente en un medio no visual. Además, al incluir gráficos, estas tablas pueden forzar a los usuarios a hacer desplazar horizontalmente la pantalla para ver una tabla diseñada en un sistema con una pantalla más grande. Para minimizar estos problemas, los autores deberían usar hojas de estilo en lugar de tablas para organizar la presentación.
+
+Nota. Esta especificación incluye información más detallada sobre tablas en las secciones sobre fundamentos del diseño con tablas y cuestiones de implementación.
+
+Aquí tenemos una tabla sencilla que ilustra algunas de las características del modelo de tablas de HTML. La siguiente definición de tabla:
+
+<TABLE border="1"
+       summary="Esta tabla da algunas estadísticas sobre la mosca
+                de la fruta: altura y peso medio, y porcentaje
+                con los ojos rojos (para machos y para hembras).">
+<CAPTION><EM>Una tabla de prueba con celdas fusionadas</EM></CAPTION>
+<TR><TH rowspan="2"><TH colspan="2">Media
+    <TH rowspan="2">Ojos<BR>Rojos
+<TR><TH>altura<TH>peso
+<TR><TH>Machos<TD>1.9<TD>0.003<TD>40%
+<TR><TH>Hembras<TD>1.7<TD>0.002<TD>43%
+</TABLE>
+
+podría representarse de una manera similar a ésta en un dispositivo tty:
+
+     Una tabla de muestra con celdas fusionadas
+    /-----------------------------------------\
+    |          |       Media       |  Ojos    |
+    |          |-------------------|  rojos   |
+    |          |  altura |   peso  |          |
+    |-----------------------------------------|
+    |  Machos  | 1.9     | 0.003   |   40%    |
+    |-----------------------------------------|
+    |  Hembras | 1.7     | 0.002   |   43%    |
+    \-----------------------------------------/
+
+o a ésta por un agente de usuario gráfico:
+
+Una tabla con celdas fusionadas
+11.2 Elementos para construir tablas
+11.2.1 El elemento TABLE
+
+<!ELEMENT TABLE - -
+     (CAPTION?, (COL*|COLGROUP*), THEAD?, TFOOT?, TBODY+)>
+<!ATTLIST TABLE                        -- elemento tabla --
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  summary     %Text;         #IMPLIED  -- propósito/estructura para salida por voz --
+  width       %Length;       #IMPLIED  -- anchura de la tabla --
+  border      %Pixels;       #IMPLIED  -- controlar el borde que rodea a la tabla --
+  frame       %TFrame;       #IMPLIED  -- qué partes del borde representar --
+  rules       %TRules;       #IMPLIED  -- líneas de división entre filas y columnas --
+  cellspacing %Length;       #IMPLIED  -- espaciado entre celdas --
+  cellpadding %Length;       #IMPLIED  -- espacio dentro de las celdas --
+  >
+
+Etiqueta inicial: obligatoria, Etiqueta final: obligatoria
+
+Definiciones de atributos
+
+summary = texto [CS]
+    Este atributo proporciona un resumen del propósito y la estructura de la tabla para agentes de usuario que representen en medios no visuales como voz o Braille.
+align = left|center|right [CI]
+    Desaprobado. Este atributo especifica la posición de la tabla con respecto al documento. Valores permitidos:
+
+        * left: La tabla está a la izquierda del documento.
+        * center: La tabla está centrada con el documento.
+        * right: La tabla está a la derecha del documento.
+
+width = longitud [CN]
+    Este atributo especifica la anchura deseada de la tabla entera y está destinado a agentes de usuario visuales. Cuando el valor es un valor porcentual, el valor es relativo al espacio disponible horizontal del agente de usuario. En ausencia de una especificación de anchura, la anchura de la tabla se determina por el agente de usuario.
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+    * bgcolor (color de fondo)
+    * frame, rules, border (bordes y líneas de división)
+    * cellspacing, cellpadding (márgenes de celdas)
+
+El elemento TABLE contiene a todos los demás elementos que especifican el título, las filas, el contenido, y el formato.
+
+La siguiente lista informativa describe qué operaciones pueden llevar a cabo los agentes de usuario cuando representen una tabla:
+
+    * Poner a disposición del usuario el resumen (summary) de la tabla. Los autores deberían proporcionar un resumen del contenido y la estructura de la tabla de modo que las personas que utilicen agentes de usuario no visuales puedan entenderla mejor.
+    * Representar el título, si está definido.
+    * Representar el encabezado de la tabla, si está definido. Representar el pie de la tabla, si está definido. Los agentes de usuario deben saber dónde representar el encabezado y el pie. Por ejemplo, si el medio de salida está paginado, los agentes de usuario pueden colocar el encabezado en la parte superior de cada página y el pie en la inferior. Análogamente, si el agente de usuario proporciona un mecanismo para desplazar las filas, el encabezado puede aparecer en la parte superior del área de desplazamiento y el pie en la parte inferior.
+    * Calcular el número de columnas de la tabla. Obsérvese que el número de filas de una tabla es igual al número de elementos TR contenidos por el elemento TABLE.
+    * Agrupar las columnas de acuerdo a las especificaciones de agrupamiento de columnas que haya.
+    * Representar las celdas, fila por fila y agrupadas en las columnas apropiadas, entre el encabezado y el pie. Los agentes de usuario visuales deberían dar formato a la tabla de acuerdo con los atributos HTML y las especificaciones de las hojas de estilo.
+
+El modelo de tablas de HTML ha sido diseñado de modo que los agentes de usuario, con la ayuda de los autores, puedan representar las tablas incrementalmente (es decir, a medida que llegan las filas de la tabla), en lugar de tener que esperar a que lleguen todos los datos antes de empezar a representarlos.
+
+Para que un agente de usuario pueda dar formato a una tabla en un solo paso, los autores deben decir al agente de usuario:
+
+    * El número de columnas de la tabla. Consulte la sección sobre el cálculo del número de columnas de una tabla para más detalles sobre cómo proporcionar esta información.
+    * Las anchuras de estas columnas. Consulte la sección sobre el cálculo de la anchura de las columnas para más detalles sobre cómo proporcionar esta información.
+
+Más concretamente, un agente de usuario puede representar una tabla en un solo paso cuando las anchuras de las columnas se especifiquen usando una combinación de elementos COLGROUP y COL. Si alguna de las columnas se especifica en términos relativos o porcentuales (véase la sección sobre el cálculo de la anchura de las columnas), los autores deben especificar también la anchura de la propia tabla.
+Direccionalidad de tablas 
+
+La direccionalidad de una tabla es o bien la direccionalidad heredada (por defecto es de izquierda a derecha) o bien la especificada por el atributo dir del elemento TABLE.
+
+Para una tabla de izquierda a derecha, la columna cero es la del lado izquierdo y la fila cero es la superior. Para una columna de derecha a izquierda, la columna cero es la del lado derecho, y la fila cero es la superior.
+
+Cuando un agente de usuario asigna celdas adicionales a una fila (véase la sección sobre el cálculo del número de columnas de una tabla), las celdas adicionales de la fila se añaden a la derecha de la tabla si la tabla es de izquierda a derecha, y a la izquierda si la tabla es de derecha a izquierda.
+
+Obsérvese que TABLE es el único elemento en el que dir invierte el orden visual de las columnas; no puede invertirse independientemente una fila individual (TR) ni un grupo de columnas (COLGROUP).
+
+El atributo dir, cuando se establece para un elemento TABLE, también afecta a la dirección del texto dentro de las celdas de la tabla (ya que el atributo dir es heredado por elementos en bloque).
+
+Para especificar una tabla de derecha a izquierda, el atributo dir se establece como sigue:
+
+<TABLE dir="RTL">
+...el resto de la tabla...
+</TABLE>
+
+La dirección del texto en celdas individuales puede cambiarse estableciendo el atributo dir en un elemento que defina la celda. Consulte la sección sobre texto bidireccional para más información sobre cuestiones de dirección del texto.
+11.2.2 Títulos de tablas: el elemento CAPTION
+
+<!ELEMENT CAPTION  - - (%inline;)*     -- título de una tabla -->
+
+<!ATTLIST CAPTION
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  >
+
+Etiqueta inicial: obligatoria, Etiqueta final: obligatoria
+
+Definiciones de atributos
+
+align = top|bottom|left|right [CI]
+    Desaprobado. Para agentes de usuario visuales, este atributo especifica la posición del título con respecto a la tabla. Valores posibles:
+
+        * top: El título está en la parte superior de la tabla. Este es el valor por defecto.
+        * bottom: El título está en la parte inferior de la tabla.
+        * left: El título está a la izquierda de la tabla.
+        * right: El título está a la derecha de la tabla.
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+
+El texto del elemento CAPTION, cuando esté presente, debería describir la naturaleza de la tabla. El elemento CAPTION sólo se permite inmediatamente después de la etiqueta inicial de TABLE. Un elemento TABLE sólo puede contener un elemento CAPTION.
+
+Los agentes de usuario visuales permiten a las personas con visión percibir rápidamente la estructura de una tabla a partir de los encabezados así como a partir del título. Una consecuencia de esto es que la información sobre el el propósito y la estructura de la tabla que dan los títulos normalmente no será la adecuada desde la perspectiva de las personas que utilicen agentes de usuario no visuales.
+
+Los autores deberían por lo tanto esforzarse en proporcionar información adicional resumiendo el propósito y la estructura de la tabla usando el atributo summary del elemento TABLE. Esto es especialmente importante para tablas sin título. Los ejemplos que figuran más adelante ilustran el uso del atributo summary.
+
+Los agentes de usuario visuales deberían evitar recortar cualquier parte de la tabla, incluyendo el título, a menos que se proporcionen medios para acceder a todo el contenido, p.ej., mediante un barra de desplazamiento horizontal o vertical. Recomendamos que el texto del título se ajuste a la misma anchura que la tabla. (Véase también la sección sobre algoritmos recomendados de composición de la presentación.)
+11.2.3 Grupos de filas: los elementos THEAD, TFOOT y TBODY
+
+<!ELEMENT THEAD    - O (TR)+           -- encabezado de tabla -->
+<!ELEMENT TFOOT    - O (TR)+           -- pie de tabla -->
+
+Etiqueta inicial: obligatoria, Etiqueta final: opcional
+
+<!ELEMENT TBODY    O O (TR)+           -- cuerpo de tabla -->
+
+Etiqueta inicial: opcional, Etiqueta final: opcional
+
+<!ATTLIST (THEAD|TBODY|TFOOT)          -- sección de tabla --
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  %cellhalign;                         -- alineación horizontal en las celdas --
+  %cellvalign;                         -- alineación vertical en las celdas --
+  >
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+    * align, char, charoff, valign (alineación en celdas)
+
+Las filas de una tabla pueden agruparse en una cabecera de tabla, un pie de tabla, y una o más secciones de cuerpo de tabla, usando los elementos THEAD, TFOOT y TBODY, respectivamente. Esta división permite a los agentes de usuario ofrecer la posibilidad de desplazar la información de los cuerpos de la tabla independientemente de la cabecera y el pie. Cuando se imprimen tablas largas, la información de cabecera y pie de tabla puede repetirse en todas las páginas que contengan datos de la tabla.
+
+La cabecera de tabla y el pie de tabla deberían contener información sobre las columnas de la tabla. El cuerpo de tabla debería contener filas de datos de tabla.
+
+En caso de estar presentes, cada elemento THEAD, TFOOT y TBODY contiene un grupo de filas. Cada grupo de filas debe contener al menos una fila, definida por el elementoTR.
+
+Este ejemplo ilustra el orden y la estructura de encabezados, pies, y cuerpos de tabla.
+
+<TABLE>
+<THEAD>
+     <TR> ...información de cabecera...
+</THEAD>
+<TFOOT>
+     <TR> ...información de pie...
+</TFOOT>
+<TBODY>
+     <TR> ...primera fila de los datos del bloque uno...
+     <TR> ...segunda fila de los datos del bloque uno...
+</TBODY>
+<TBODY>
+     <TR> ...primera fila de los datos del bloque dos...
+     <TR> ...segunda fila de los datos del bloque dos...
+     <TR> ...tercera fila de los datos del bloque dos...
+</TBODY>
+</TABLE>
+
+TFOOT debe aparecer antes de TBODY dentro de una definición de TABLE de modo que los agentes de usuario puedan representar el pie antes de recibir todas las (potencialmente numerosas) filas de datos. A continuación se resume qué etiquetas son obligatorias y cuáles pueden omitirse:
+
+    * La etiqueta inicial de TBODY es siempre obligatoria excepto cuando la tabla contenga sólo un cuerpo de tabla y ninguna sección de cabecera ni de pie. La etiqueta final de TBODY puede omitirse siempre sin problemas.
+    * Las etiquetas iniciales de THEAD y TFOOT son obligatorias cuando estén presentes las secciones de cabecera y de pie de tabla respectivamente, pero las etiquetas finales correspondientes pueden omitirse sin problemas.
+
+Los analizadores de los agentes de usuario conformes deben obedecer estas reglas por razones de compatibilidad con versiones anteriores.
+
+La tabla del ejemplo previo puede abreviarse quitando ciertas etiquetas iniciales:
+
+<TABLE>
+<THEAD>
+     <TR> ...información de cabecera...
+<TFOOT>
+     <TR> ...información de pie...
+<TBODY>
+     <TR> ...primera fila de los datos del bloque uno...
+     <TR> ...segunda fila de los datos del bloque uno...
+<TBODY>
+     <TR> ...primera fila de los datos del bloque dos...
+     <TR> ...segunda fila de los datos del bloque dos...
+     <TR> ...tercera fila de los datos del bloque dos...
+</TABLE>
+
+Las secciones THEAD, TFOOT y TBODY deben contener el mismo número de columnas.
+11.2.4 Grupos de columnas: los elementos COLGROUP y COL
+
+Los grupos de columnas permiten a los autores crear divisiones estructurales dentro de una tabla. Los autores pueden resaltar esta estructura por medio de hojas de estilo o con atributos HTML (p.ej., el atributo rules del elemento TABLE). Para un ejemplo de presentación visual de grupos de columnas, consulte la tabla de muestra.
+
+Una tabla puede contener o bien un único grupo implícito de columnas (si no hay ningún elemento COLGROUP delimitando las columnas), o cualquier número de grupos explícitos de columnas (cada uno de ellos delimitado por un elemento COLGROUP).
+
+El elemento COL permite a los autores compartir atributos entre varias columnas sin que ello implique ningún tipo de agrupamiento estructural. El "campo de acción" del elemento COL es el número de columnas que compartirán los atributos del elemento.
+El elemento COLGROUP  
+
+<!ELEMENT COLGROUP - O (COL)*          -- grupo de columnas de tabla -->
+<!ATTLIST COLGROUP
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  span        NUMBER         1         -- número por defecto de columnas en el grupo--
+  width       %MultiLength;  #IMPLIED  -- anchura por defecto para
+                                          las COLs contenidas --
+  %cellhalign;                         -- alineación horizontal en las celdas --
+  %cellvalign;                         -- alineación vertical en las celdas --
+  >
+
+Etiqueta inicial: obligatoria, Etiqueta final: opcional
+
+Definiciones de atributos
+
+span = number [CN]
+    Este atributo, que debe ser un entero > 0, especifica el número de columnas de un grupo de columnas. Los diferentes valores significan lo siguiente:
+
+        * En ausencia de un atributo span, cada COLGROUP define un grupo de columnas que contiene una columna.
+        * Si el atributo span se establece en N > 0, el elemento COLGROUP actual define un grupo de columnas que contiene N columnas.
+
+    Los agentes de usuario deben ignorar este atributo si el elemento COLGROUP contiene uno o más elementos COL.
+width = multilongitud [CN]
+
+    Este atributo especifica una anchura por defecto para cada columna del grupo de columnas actual. Además de los valores normales de píxeles, porcentajes y longitudes relativas, este atributo permite la forma especial "0*" (cero asterisco) que significa que la anchura de cada columna del grupo debería ser la anchura mínima necesaria para alojar los contenidos de la columna. Esto implica que antes de poder calcular correctamente la anchura de la columna deben conocerse primero todos los contenidos de la columna. Los autores deberían tener en cuenta que al especificar "0*" impedirán a los agentes de usuario visuales representar la tabla incrementalmente.
+
+    La anchura de cualquier columna del grupo de columnas cuya anchura (width) se especifique mediante un elemento COL prevalece sobre el valor de este atributo.
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+    * align, char, charoff, valign (alineación en celdas)
+
+El elemento COLGROUP crea un grupo explícito de columnas. El número de columnas del grupo de columnas puede especificarse de dos maneras mutuamente exclusivas:
+
+   1. El atributo span del elemento (valor por defecto 1) especifica el número de columnas del grupo.
+   2. Cada elemento COL del COLGROUP representa una o más columnas en el grupo.
+
+La ventaja de usar el atributo span es que los autores pueden agrupar información sobre las anchuras de las columnas. Así, si una tabla contiene cuarenta columnas, todas ellas de 20 píxeles de ancho, es más fácil escribir:
+
+   <COLGROUP span="40" width="20">
+   </COLGROUP>
+
+que:
+
+   <COLGROUP>
+      <COL width="20">
+      <COL width="20">
+      ...un total de cuarenta elementos COL...
+   </COLGROUP>
+
+Cuando sea necesario distinguir una columna del resto del grupo (p.ej., para información de estilo, para especificar información de anchura, etc.), los autores deben identificar la anchura de esa columna con un elemento COL. Así, para aplicar información de estilo especial a la última columna del ejemplo anterior, la singularizamos del siguiente modo:
+
+   <COLGROUP width="20">
+      <COL span="39">
+      <COL id="dame-un-formato-especial">
+   </COLGROUP>
+
+El atributo width del elemento COLGROUP es heredado por las cuarenta columnas. El primer elemento COL se refiere a las primeras 39 columnas (y no hace nada especial con ellas) y el segundo asigna un valor de id a la columna número 40 de modo que una hoja de estilo pueda hacer referencia a ella.
+
+La tabla del siguiente ejemplo contiene dos grupos de columnas. El primer grupo de columnas contiene 10 columnas y el segundo contiene 5 columnas. La anchura por defecto de las columnas del primer grupo de columnas es de 50 píxeles. La anchura de las columnas del segundo grupo de columnas será la mínima necesaria para cada columna.
+
+<TABLE>
+<COLGROUP span="10" width="50">
+<COLGROUP span="5" width="0*">
+<THEAD>
+<TR><TD> ...
+</TABLE>
+
+El elemento COL 
+
+<!ELEMENT COL      - O EMPTY           -- columna de tabla -->
+<!ATTLIST COL                          -- grupos y propiedades de columnas --
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  span        NUMBER         1         -- los atributos de COL afectan a N columnas --
+  width       %MultiLength;  #IMPLIED  -- especificación de la anchura
+                                          de las columnas --
+  %cellhalign;                         -- alineación horizontal en las celdas --
+  %cellvalign;                         -- alineación vertical en las celdas --
+  >
+
+Etiqueta inicial: obligatoria, Etiqueta final: prohibida
+
+Definiciones de atributos
+
+span = number [CN]
+    Este atributo, cuyo valor debe ser un entero > 0, especifica el número de columnas que "abarca" el elemento COL; el elemento COL comparte sus atributos con todas las columnas que abarca. El valor por defecto de este atributo es 1 (es decir, el elemento COL se refiere a una sola columna). Si el atributo span se establece en N > 1, el elemento COL actual comparte sus atributos con las siguientes N-1 columnas.
+width = multilongitud [CN]
+    Este atributo especifica una anchura por defecto para todas las columnas abarcadas por el elemento COL actual. Tiene el mismo significado que el atributo width del elemento COLGROUP y prevalece sobre él.
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+    * align, char, charoff, valign (alineación en celdas)
+
+El elemento COL permite a los autores agrupar especificaciones de atributos para columnas de tablas. COL no agrupa columnas estructuralmente; ése es el papel del elemento COLGROUP. Los elementos COL están vacíos y sólo sirven como soporte de atributos. Pueden aparecer dentro o fuera de un grupo explícito de columnas (es decir, de un elemento COLGROUP).
+
+El atributo width de COL se refiere a la anchura de todas y cada una de las columnas que abarca el elemento.
+Cálculo del número de columnas de una tabla 
+
+Hay dos maneras de determinar el número de columnas de una tabla (en orden de precedencia):
+
+   1. Si el elemento TABLE contiene algún elemento COLGROUP o COL, los agentes de usuario deberían calcular el número de columnas sumando los valores siguientes:
+          * Para cada elemento COL, tomar el valor de su atributo span (valor por defecto 1).
+          * Para cada elemento COLGROUP que contenga al menos un elemento COL, ignorar el atributo span del elemento COLGROUP. Para cada elemento COL, realizar el cálculo del paso 1.
+          * Para cada elemento vacío COLGROUP, tomar el valor de su atributo span (valor por defecto 1).
+   2. De otra manera, si el elemento TABLE no contiene elementos COLGROUP ni COL, los agentes de usuario deberían basar el número de columnas en lo que requieran las filas. El número de columnas es igual al número de columnas requerido por la fila con más columnas, incluyendo las celdas que abarcan varias columnas. Para cualquier fila que tenga menos columnas que este número de columnas, el final de la fila debería rellenarse con celdas vacías. El "final" de una fila depende de la direccionalidad de la tabla.
+
+Es un error que una tabla contenga elementos COLGROUP o COL y que los dos cálculos no resulten en el mismo número de columnas.
+
+Una vez que el agente de usuario ha calculado el número de columnas de la tabla, puede agruparlas en grupos de columnas.
+
+Por ejemplo, para cada una de las tablas siguientes, los dos métodos de cálculo de columnas dan tres columnas. Las primeras tres tablas pueden representarse incrementalmente.
+
+<TABLE>
+<COLGROUP span="3"></COLGROUP>
+<TR><TD> ...
+...filas...
+</TABLE>
+
+<TABLE>
+<COLGROUP>
+<COL>
+<COL span="2">
+</COLGROUP>
+<TR><TD> ...
+...filas...
+</TABLE>
+
+<TABLE>
+<COLGROUP>
+<COL>
+</COLGROUP>
+<COLGROUP span="2">
+<TR><TD> ...
+...filas...
+</TABLE>
+
+<TABLE>
+<TR>
+  <TD><TD><TD>
+</TR>
+</TABLE>
+
+Cálculo de la anchura de las columnas 
+
+Los autores pueden especificar anchuras de columnas de tres maneras:
+
+Fijas (Fixed)
+    Una especificación de anchura fija está dada en píxeles (p.ej., width="30"). Una especificación de anchura fija permite la representación incremental.
+Porcentuales (Percentage)
+    Una especificación porcentual (p.ej., width="20%") se basa en el porcentaje del espacio horizontal disponible para la tabla (entre los bordes actuales izquierdo y derecho, incluyendo elementos flotantes). Obsérvese que este espacio no depende de la propia tabla, y por lo tanto las especificaciones porcentuales permiten la representación incremental.
+Proporcionales (Proportional)
+    Las especificaciones proporcionales (p.ej., width="3*") se refieren a porciones de espacio horizontal requerido por una tabla. Si se da a la anchura de la tabla un valor fijo por medio del atributo width del elemento TABLE, los agentes de usuario pueden representar la tabla incrementalmente incluso con columnas proporcionales.
+
+    Sin embargo, si la tabla no tiene una anchura fija, los agentes de usuario deben recibir todos los datos de la tabla antes de poder determinar el espacio horizontal requerido por la tabla. Sólo entonces puede asignarse este espacio a las columnas proporcionales.
+
+Si un autor no especifica información de anchura para una columna, un agente de usuario no puede dar formato a la tabla incrementalmente, ya que debe esperar a que lleguen todos los datos de la columna para poder asignarle una anchura adecuada.
+
+Si las anchuras de las columnas resultan ser demasiado estrechas para los contenidos de alguna de las celdas de la tabla, los agentes de usuario pueden optar por remodelar la tabla.
+
+La tabla de este ejemplo contiene seis columnas. La primera no pertenece a un grupo explícito de columnas. Las tres siguientes pertenecen al primer grupo explícito de columnas y las dos últimas pertenecen al segundo grupo explícito de columnas. Esta tabla no puede ser formateada incrementalmente ya que contiene especificaciones de anchuras de columna proporcionales y no hay ningún valor para el atributo width del elemento TABLE.
+
+Una vez que el agente de usuario (visual) ha recibido los datos de la tabla, el agente de usuario asignará el espacio horizontal disponible como sigue: Primero el agente de usuario asignará 30 píxeles a las columnas uno y dos. Después, reservará el espacio mínimo requerido por la tercera columna. El resto del espacio horizontal lo dividirá es seis porciones iguales (ya que 2* + 1* + 3* = 6 porciones). La columna cuatro (2*) recibirá dos de estas porciones, la columna cinco (1*) recibirá una, y la columna seis (3*) recibirá tres.
+
+    
+<TABLE>
+<COLGROUP>
+   <COL width="30">
+<COLGROUP>
+   <COL width="30">
+   <COL width="0*">
+   <COL width="2*">
+<COLGROUP align="center">
+   <COL width="1*">
+   <COL width="3*" align="char" char=":">
+<THEAD>
+<TR><TD> ...
+...filas...
+</TABLE>
+
+Hemos establecido el valor del atributo align del tercer grupo de columnas en "center". Todas las celdas de todas las columnas de este grupo heredarán este valor, pero pueden anularlo. De hecho, el COL hace justo eso, especificando que todas las celdas de la columna que gobierna serán alineadas con el carácter ":".
+
+En la siguiente tabla, las especificaciones de anchuras de columna permiten al agente de usuario dar formato a la tabla incrementalmente:
+
+    
+<TABLE width="200">
+<COLGROUP span="10" width="15">
+<COLGROUP width="*">
+   <COL id="penultima-columna">
+   <COL id="ultima-columna">
+<THEAD>
+<TR><TD> ...
+...filas...
+</TABLE>
+
+Las diez primeras columnas serán cada una de 15 píxeles de ancho. Las dos últimas columnas recibirán cada una la mitad de los 50 píxeles restantes. Obsérvese que los elementos COL sólo sirven para que pueda especificarse un valor id a las dos últimas columnas.
+
+Nota. Aunque el atributo width del elemento TABLE no está desaprobado, se aconseja a los autores usar hojas de estilo para especificar anchuras de tabla.
+11.2.5 Filas de una tabla: el elemento TR
+
+<!ELEMENT TR       - O (TH|TD)+        -- fila de tabla -->
+<!ATTLIST TR                           -- fila de tabla --
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  %cellhalign;                         -- alineación horizontal en las celdas --
+  %cellvalign;                         -- alineación vertical en las celdas --
+  >
+
+Etiqueta inicial: obligatoria, Etiqueta final: opcional
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+    * bgcolor (color de fondo)
+    * align, char, charoff, valign (alineación en celdas)
+
+Los elementos TR actúan como contenedores de una fila de celdas de una tabla. La etiqueta final puede omitirse.
+
+Esta tabla de ejemplo contiene tres filas, cada una iniciada con el elemento TR:
+
+<TABLE summary="Esta tabla muestra el número de tazas de
+                café consumidas por cada senador, el tipo
+                de café (descafeinado o normal), y si lo
+                toma con azúcar.">
+<CAPTION>Tazas de café consumidas por cada senador</CAPTION>
+<TR> ...Una fila de encabezado...
+<TR> ...Primera fila de datos...
+<TR> ...Segunda fila de datos...
+...el resto de la tabla...
+</TABLE>
+
+11.2.6 Celdas de una tabla: los elementos TH y TD
+
+<!ELEMENT (TH|TD)  - O (%flow;)*       -- celda de encabezado de tabla,
+                                          celda de datos de tabla -->
+
+<!-- Para las tablas normales scope es más simple que el atributo headers -->
+<!ENTITY % Scope "(row|col|rowgroup|colgroup)">
+
+<!-- TH es para encabezados, TD es para datos,
+     y para celdas que actúen como ambos use TD -->
+<!ATTLIST (TH|TD)                      -- celda de encabezado o de datos --
+  %attrs;                              -- %coreattrs, %i18n, %events --
+  abbr        %Text;         #IMPLIED  -- abreviatura para la celda de encabezado --
+  axis        CDATA          #IMPLIED  -- lista de encabezados relacionados
+                                          separados por comas --
+  headers     IDREFS         #IMPLIED  -- lista de id's de celdas de encabezado --
+  scope       %Scope;        #IMPLIED  -- campo de acción cubierto por las celdas
+                                          de encabezado --
+  rowspan     NUMBER         1         -- número de filas abarcado por la celda --
+  colspan     NUMBER         1         -- número de columnas abarcado por la celda --
+  %cellhalign;                         -- alineación horizontal en las celdas --
+  %cellvalign;                         -- alineación vertical en las celdas --
+  >
+
+Etiqueta inicial: obligatoria, Etiqueta final: opcional
+
+Definiciones de atributos
+
+headers = idrefs [CS]
+    Este atributo especifica la lista de celdas de encabezado que proporcionan información de encabezado para la celda de datos actual. El valor de este atributo es una lista de nombres de celdas separados por comas; a estas celdas se les debe dar nombre estableciendo su atributo id. Generalmente los autores usan el atributo headers para ayudar a los agentes de usuario no visuales a representar información de encabezado sobre celdas de datos (p.ej., leyendo la información de encabezado antes de los datos de la celda), pero el atributo también puede emplearse junto con hojas de estilo. Véase también el atributo scope.
+scope = scope-name [CI]
+    Este atributo especifica el conjunto de celdas de datos para las cuales la celda de encabezado actual proporciona información de encabezado. Este atributo puede usarse en lugar del atributo headers, en particular en tablas sencillas. Si se especifica, este atributo debe tener uno de los siguientes valores:
+
+        * row (fila): La celda actual proporciona información de encabezado para el resto de la fila que la contiene (véase también la sección sobre direccionalidad de tablas).
+        * col (columna): La celda actual proporciona información de encabezado para el resto de la columna que la contiene.
+        * rowgroup (grupo de filas): La celda de encabezado proporciona información de encabezado para el resto del grupo de filas que la contiene.
+        * colgroup (grupo de columnas): La celda de encabezado proporciona información de encabezado para el resto del grupo de columnas que la contiene.
+
+abbr = texto [CS]
+    Este atributo debería usarse para proporcionar una forma abreviada del contenido de la celda; los agentes de usuario pueden representar esta forma abreviada en lugar del contenido de la celda cuando sea apropiado. Los nombres abreviados deberían ser cortos, ya que los agentes de usuario pueden representarlos repetidas veces. Por ejemplo, los sintetizadores de voz pueden representar los encabezados abreviados relacionados con una celda en particular antes de representar el contenido de esa celda.
+axis = cdata [CI]
+    Este atributo puede utilizarse para situar una celda en categorías conceptuales, las cuales pueden considerarse como ejes de un espacio n-dimensional. Los agentes de usuario pueden dar a los usuarios acceso a estas categorías (p.ej., el usuario puede pedir al agente de usuario todas las celdas que pertenecen a ciertas categorías, el agente usuario puede presentar una tabla con la forma de una tabla de contenidos, etc.). Consulte la sección sobre categorización de celdas para más información. El valor de este atributo es una lista de nombres de categorías separados por comas.
+rowspan = number [CN]
+    Este atributo especifica el número de filas abarcado por la celda actual. El valor por defecto de este atributo es uno ("1"). El valor cero ("0") significa que la celda abarca todas las filas desde la fila actual hasta la última fila de la sección de tabla (THEAD, TBODY, o TFOOT) en la que la celda está definida.
+colspan = number [CN]
+    Este atributo especifica el número de columnas abarcado por la celda actual. El valor por defecto de este atributo es uno ("1"). El valor cero ("0") significa que la celda abarca todas las columnas desde la columna actual hasta la última columna del grupo de columnas (COLGROUP) en que la celda está definida.
+nowrap [CI]
+    Desaprobado. Si está presente, este atributo booleano le dice a los agentes de usuario visuales que deshabiliten el ajuste automático de líneas (text wrapping) para esta celda. Para lograr efectos de ajuste de texto deberían usarse hojas de estilo en lugar de este atributo. Nota. Si se utiliza sin cuidado, este atributo puede resultar en celdas excesivamente anchas.
+width = longitud [CN]
+    Desaprobado. Este atributo proporciona a los agentes de usuario una anchura de celda recomendada.
+height = longitud [CN]
+    Desaprobado. Este atributo proporciona a los agentes de usuario una altura de celda recomendada.
+
+Atributos definidos en otros lugares
+
+    * id, class (identificadores a nivel de documento)
+    * lang (información sobre el idioma), dir (dirección del texto)
+    * title (título del elemento)
+    * style (información de estilo en línea)
+    * onclick, ondblclick, onmousedown, onmouseup, onmouseover, onmousemove, onmouseout, onkeypress, onkeydown, onkeyup (eventos intrínsecos)
+    * bgcolor (color de fondo)
+    * align, char, charoff, valign (alineación en celdas)
+
+Las celdas de una tabla pueden contener dos tipos de información: información de encabezado y datos. Esta distinción permite a los agentes de usuario representar celdas de encabezado y de datos de manera diferente, incluso en ausencia de hojas de estilo. Por ejemplo, los agentes de usuario visuales pueden presentar el texto de las celdas de encabezado con una fuente en negrita. Los sintetizadores de voz pueden representar la información de encabezado con una inflexión de voz diferente.
+
+El elemento TH define una celda que contiene información de encabezado. Los agentes de usuario tienen a su disposición dos piezas de información de encabezado: los contenidos del elemento TH y el valor del atributo abbr. Los agentes de usuario deben representar o bien los contenidos de la celda o bien el valor del atributo abbr. En medios visuales, el último puede ser apropiado cuando no hay espacio suficiente para representar los contenidos completos de la celda. Para medios no visuales puede usarse abbr como abreviatura de los encabezados de la tabla cuando éstos se representen junto con los contenidos de las celdas a las que se aplican.
+
+Los atributos headers y scope también permiten a los autores ayudar a los agentes de usuario no visuales a procesar información de encabezado. Consulte la sección sobre rótulos de celdas para agentes de usuario no visuales para más información y ejemplos.
+
+El elemento TD define una celda que contiene datos.
+
+Las celdas pueden estar vacías (es decir, pueden no contener datos).
+
+Por ejemplo, la siguiente tabla contiene cuatro columnas de datos, cada una encabezada por una descripción de la columna.
+
+<TABLE summary="Esta tabla muestra el número de tazas
+                de café consumidas por cada senador, el tipo
+                de café (descafeinado o normal), y si
+                lo toma con azúcar">
+<CAPTION>Tazas de café consumidas por cada senador</CAPTION>
+<TR>
+   <TH>Nombre</TH>
+   <TH>Tazas</TH>
+   <TH>Tipo de Café</TH>
+   <TH>¿Azúcar?</TH>
+<TR>
+   <TD>T. Sexton</TD>
+   <TD>10</TD>
+   <TD>Espresso</TD>
+   <TD>No</TD>
+<TR>
+   <TD>J. Dinnen</TD>
+   <TD>5</TD>
+   <TD>Descafeinado</TD>
+   <TD>Sí</TD>
+</TABLE>
+
+Un agente de usuario que represente la salida en un dispositivo tty podría mostrar esto como sigue:
+
+Nombre       Tazas      Tipo de Café     ¿Azúcar?
+T. Sexton    10         Espresso         No
+J. Dinnen    5          Descafeinado     Sí
+
+Celdas que abarcan varias filas o columnas 
+
+Las celdas pueden abarcar varias filas o columnas. El número de filas o de columnas abarcado por una celda se establece con los atributos rowspan y colspan de los elementos TH y TD.
+
+En esta definición de tabla, especificamos que la celda de la fila cuatro, columna 2, debería abarcar un total de tres columnas, incluyendo la columna actual.
+
+<TABLE border="1">
+<CAPTION>Tazas de café consumidas por cada senador</CAPTION>
+<TR><TH>Nombre<TH>Tazas<TH>Tipo de Café<TH>¿Azúcar?
+<TR><TD>T. Sexton<TD>10<TD>Espresso<TD>No
+<TR><TD>J. Dinnen<TD>5<TD>Descafeinado<TD>Sí
+<TR><TD>A. Soria<TD colspan="3"><em>No disponible</em>
+</TABLE>
+
+Un agente visual podría representar esta tabla en un dispositivo tty como sigue:
+
+ Tazas de café consumidas por cada senador
+ -----------------------------------------
+ |  Nombre |Tazas|Tipo de Café  |¿Azúcar?|
+ -----------------------------------------
+ |T. Sexton|10   |Espresso      |No      |
+ -----------------------------------------
+ |J. Dinnen|5    |Descafeinado  |Yes     |
+ -----------------------------------------
+ |A. Soria |No disponible                |
+ -----------------------------------------
+
+El siguiente ejemplo ilustra (con la ayuda de los bordes de la tabla) cómo afectan las definiciones de celdas que abarcan más de una fila o de una columna a la definición de celdas posteriores. Consideremos la siguiente definición de tabla:
+
+<TABLE border="1">
+<TR><TD>1 <TD rowspan="2">2 <TD>3
+<TR><TD>4 <TD>6
+<TR><TD>7 <TD>8 <TD>9
+</TABLE>
+
+Al abarcar la celda "2" la primera y la segunda filas, la definición de la segunda fila la tendrá en cuenta. Así, el segundo TD de la fila dos en realidad define la tercera celda de la fila. Visualmente, la tabla podría representarse en un dispositivo tty como sigue:
+
+-------------
+| 1 | 2 | 3 | 
+----|   |----
+| 4 |   | 6 |
+----|---|----
+| 7 | 8 | 9 |
+-------------
+
+mientras que un agente de usuario gráfico podría representarlo de esta forma:
+
+Imagen de una tabla con rowspan=2
+
+Obsérvese que si el TD que define la celda "6" hubiera sido omitido, el agente de usuario habría añadido una celda adicional vacía para completar la fila.
+
+Análogamente, en la siguiente definición de tabla:
+
+<TABLE border="1">
+<TR><TD>1 <TD>2 <TD>3
+<TR><TD colspan="2">4 <TD>6
+<TR><TD>7 <TD>8 <TD>9
+</TABLE>
+
+la celda "4" abarca dos columnas, de modo que el segundo TD de la fila en realidad define la tercera celda ("6"):
+
+-------------
+| 1 | 2 | 3 | 
+--------|----
+| 4     | 6 |
+--------|----
+| 7 | 8 | 9 |
+-------------
+
+Un agente de usuario gráfico podría representarlo de esta forma:
+
+Imagen de una tabla con colspan=2
+
+La definición de celdas superpuestas es un error. Los agentes de usuario pueden tratar este error de formas diferentes (p.ej., la representación puede variar).
+
+El siguiente ejemplo ilegal ilustra cómo podrían crearse celdas superpuestas. En esta tabla, la celda "5" abarca dos filas y la celda "7" abarca dos columnas, de modo que hay una superposición en la celda que está entre "7" y "9":
+
+<TABLE border="1">
+<TR><TD>1 <TD>2 <TD>3
+<TR><TD>4 <TD rowspan="2">5 <TD>6
+<TR><TD colspan="2">7 <TD>9
+</TABLE>
+
+11.3 Formato de tablas por agentes de usuario visuales
+
+Nota. Las siguientes secciones describen los atributos HTML relacionados con el formato visual de tablas. Cuando esta especificación fue publicada por primera vez en 1997, [CSS1] no ofrecía mecanismos para controlar todos los aspectos del formato visual de tablas. Desde entonces, [CSS2] ha añadido propiedades para permitir el formato visual de tablas.
+
+HTML 4 incluye mecanismos para controlar:
+
+    * los estilos de los bordes
+    * el alineación horizontal y vertical de los contenidos de las celdas
+    * y los márgenes de las celdas
+
+11.3.1 Bordes y líneas de división
+
+Los atributos siguientes afectan al marco externo (frame) y a las líneas de división interiores (rules) de una tabla.
+
+Definiciones de atributos
+
+frame = void|above|below|hsides|lhs|rhs|vsides|box|border [CI]
+    Este atributo especifica qué lados del marco que rodea a una tabla serán visibles. Valores posibles:
+
+        * void: Ningún lado. Este es el valor por defecto.
+        * above: Sólo el borde superior.
+        * below: Sólo el borde inferior.
+        * hsides: Sólo los bordes superior e inferior.
+        * vsides: Sólo los lados derecho e izquierdo.
+        * lhs: Sólo el lado izquierdo.
+        * rhs: Sólo el lado derecho.
+        * box: Los cuatro lados.
+        * border: Los cuatro lados.
+
+rules = none|groups|rows|cols|all [CI]
+    Este atributo especifica qué líneas de división aparecerán entre las celdas de una tabla. La representación de las líneas de división depende del agente de usuario. Valores posibles:
+
+        * none: Ninguna línea de división. Este es el valor por defecto.
+        * groups: Sólo aparecerán líneas de división entre grupos de filas (ver THEAD, TFOOT y TBODY) y grupos de columnas (ver COLGROUP y COL).
+        * rows: Sólo aparecerán líneas de división entre filas.
+        * cols: Sólo aparecerán líneas de división entre columnas.
+        * all: Aparecerán líneas de división entre todas las filas y columnas.
+
+border = píxeles [CN]
+    Este atributo especifica la anchura (sólo en píxeles) del marco que rodea a una tabla (véase la Nota que se encuentra más abajo para más información sobre este atributo).
+
+Para ayudar a distinguir las celdas de una tabla, podemos establecer el atributo border del elemento TABLE. Consideremos uno de los ejemplos previos:
+
+<TABLE border="1" 
+       summary="Esta tabla muestra el número de tazas
+                de café consumidas por cada senador, el tipo 
+                de café (descafeinado o normal) y si lo 
+                toma con azúcar.">
+<CAPTION>Tazas de café consumidas por cada senador</CAPTION>
+<TR>
+   <TH>Nombre</TH>
+   <TH>Tazas</TH>
+   <TH>Tipo de Café</TH>
+   <TH>¿Azúcar?</TH>
+<TR>
+   <TD>T. Sexton</TD>
+   <TD>10</TD>
+   <TD>Espresso</TD>
+   <TD>No</TD>
+<TR>
+   <TD>J. Dinnen</TD>
+   <TD>5</TD>
+   <TD>Descafeinado</TD>
+   <TD>Sí</TD>
+</TABLE>
+
+En el siguiente ejemplo, el agente de usuario debería mostrar bordes de cinco píxeles de grosor en los lados izquierdo y derecho de la tabla, con líneas de división entre cada dos columnas.
+
+<TABLE border="5" frame="vsides" rules="cols">
+<TR> <TD>1 <TD>2 <TD>3
+<TR> <TD>4 <TD>5 <TD>6
+<TR> <TD>7 <TD>8 <TD>9
+</TABLE>
+
+Los agentes de usuario deberían obedecer las siguientes especificaciones para conservar la compatibilidad con versiones anteriores.
+
+    * Especificar border="0" implica frame="void" y, a menos que se especifique lo contrario, rules="none".
+    * Otros valores de border implican frame="border" y, a menos que se especifique lo contrario, rules="all".
+    * El valor "border" en la etiqueta inicial del elemento TABLE debería ser interpretado como el valor del atributo frame. Implica rules="all" y algún valor por defecto (distinto de cero) para el atributo border.
+
+Por ejemplo, las siguientes definiciones son equivalentes:
+
+<TABLE border="2">
+<TABLE border="2" frame="border" rules="all">
+
+así como las siguientes:
+
+<TABLE border>
+<TABLE frame="border" rules="all">
+
+Nota. El atributo border también define el comportamiento de los bordes de los elementos OBJECT e IMG, pero toma valores diferentes para esos elementos.
+11.3.2 Alineación horizontal y vertical
+
+Los siguientes atributos pueden especificarse para diferentes elementos de una tabla (véanse sus definiciones).
+
+<!-- atributos de alineación horizontal de los contenidos de las celdas -->
+<!ENTITY % cellhalign
+  "align      (left|center|right|justify|char) #IMPLIED
+   char       %Character;    #IMPLIED  -- carácter de alineación, p.ej. char=':' --
+   charoff    %Length;       #IMPLIED  -- offset del carácter de alineación --"
+  >
+<!-- atributos de alineación vertical para los contenidos de las celdas -->
+<!ENTITY % cellvalign
+  "valign     (top|middle|bottom|baseline) #IMPLIED"
+  >
+
+Definiciones de atributos
+
+align = left|center|right|justify|char [CI]
+    Este atributo especifica la alineación de los datos y la justificación del texto de una celda. Valores posibles:
+
+        * left: Datos a la izquierda/Texto justificado a la izquierda.
+        * center: Datos centrados/Texto con justificación centrada. Este es el valor por defecto para los encabezados de las tablas.
+        * right: Datos a la derecha/Texto justificado a la derecha.
+        * justify: Texto doblemente justificado.
+        * char: Alinear el texto alrededor de un carácter específico. Si un agente de usuario no soporta alineación alrededor de un carácter, el comportamiento en presencia de este valor queda sin especificar.
+
+valign = top|middle|bottom|baseline [CI]
+    Este atributo especifica la posición vertical de los datos dentro de una celda. Valores posibles:
+
+        * top: Los datos de la celda se alinean con la parte superior de la celda.
+        * middle: Los datos de la celda se centran verticalmente dentro de la celda. Este es el valor por defecto.
+        * bottom: Los datos de la celda se alinean con la parte inferior de la celda.
+        * baseline: Todas las celdas que estén en la misma fila que una celda cuyo atributo valign tenga este valor deberían tener sus datos textuales posicionados de tal modo que la primera línea de texto aparezca en una línea de base común para todas las celdas de la fila. Esta restricción no se aplica a las líneas subsiguientes de texto de estas celdas.
+
+char = carácter [CN]
+    Este atributo especifica que un carácter individual dentro de un fragmento de texto actúe como eje de alineación. El valor por defecto para este atributo es el carácter de punto decimal para el idioma actual, definido por el atributo lang (p.ej., el punto (".") en inglés y la coma (",") en francés). Los agentes de usuario no necesitan soportar este atributo.
+charoff = longitud [CN]
+    Si está presente, este atributo especifica la distancia (offset) entre el borde y la primera aparición del carácter de alineación en cada línea. Si una línea no incluye el carácter de alineación, debería ser desplazada horizontalmente hasta la posición de alineación.
+
+    Cuando se usa charoff para establecer el offset de un carácter de alineación, la dirección del desplazamiento está determinada por la dirección actual del texto (establecida con el atributo dir). En texto de izquierda a derecha (el valor por defecto), el desplazamiento es desde el margen izquierdo. En textos de derecha a izquierda, el desplazamiento es desde el margen derecho. Los agentes de usuario no necesitan soportar este atributo.
+
+La tabla de este ejemplo alinea una fila de valores monetarios alrededor de un punto decimal. Hemos establecido explícitamente el carácter de alineación "."
+
+<TABLE border="1">
+<COLGROUP>
+<COL><COL align="char" char=".">
+<THEAD>
+<TR><TH>Verdura <TH>Precio por kilo
+<TBODY>
+<TR><TD>Lechuga    <TD>$1
+<TR><TD>Zanahorias <TD>$10.50
+<TR><TD>Nabos      <TD>$100.30
+</TABLE>
+
+La tabla formateada puede parecerse a la siguiente:
+
+-------------------------------
+|   Verdura   |Precio por kilo|
+|-------------|---------------|
+|Lechuga      |          $1   |
+|-------------|---------------|
+|Zanahorias   |         $10.50|
+|-------------|---------------|
+|Nabos        |        $100.30|
+-------------------------------
+
+Cuando los contenidos de una celda contienen más de una aparición del carácter de alineación especificado por char y los contenidos no caben en una sola línea, el comportamiento del agente de usuario queda sin especificar. Los autores deberían por lo tanto tener cuidado cuando usen char.
+
+Nota. Los agentes de usuario visuales suelen representar los elementos TH horizontal y verticalmente centrados dentro de la celda y con una fuente en negrita.
+Herencia de las especificaciones de alineación 
+
+La alineación de los contenidos de una celda puede especificarse independientemente para cada celda, o heredarse de los elementos que la contienen, como una fila, una columna, o la propia tabla.
+
+El orden de precedencia (de más alta a más baja) de los atributos align, char y charoff es el siguiente:
+
+   1. Un atributo de alineación establecido en un elemento dentro de los datos de la celda (p.ej., P).
+   2. Un atributo de alineación establecido en una celda (TH y TD).
+   3. Un atributo de alineación establecido en un elemento de grupo de columnas (COL y COLGROUP). Cuando la celda sea parte de un tramo que abarque varias columnas, la propiedad de alineación se hereda de la definición de la celda al comienzo del tramo.
+   4. Un atributo de alineación establecido en un elemento de fila o grupo de filas (TR, THEAD, TFOOT y TBODY). Cuando una celda sea parte de un tramo que abarque varias filas, la propiedad de alineación se hereda de la definición de la celda al comienzo del tramo.
+   5. Un atributo de alineación establecido en la tabla (TABLE).
+   6. El valor por defecto de la alineación.
+
+El orden de precedencia (de más alta a más baja) para el atributo valign (así como para los otros atributos heredados lang, dir y style) es el siguiente:
+
+   1. Un atributo establecido en un elemento dentro de los datos de la celda (p.ej., P).
+   2. Un atributo establecido en una celda (TH y TD).
+   3. Un atributo establecido en un elemento de fila o grupo de filas (TR, THEAD, TFOOT y TBODY). Cuando la celda forme parte de un tramo que abarque varias filas, el valor del atributo se hereda de la definición de la celda al comienzo del tramo.
+   4. Un atributo establecido en un elemento de grupo de columnas (COL y COLGROUP). Cuando la celda forme parte de un tramo que abarque varias columnas, el valor del atributo se hereda de la definición de la celda al comienzo del tramo.
+   5. Un atributo establecido en la tabla (TABLE).
+   6. El valor por defecto del atributo.
+
+Además de eso, cuando se representen celdas, para determinar la alineación horizontal las columnas tienen preferencia sobre las filas, mientras que para la alineación vertical las filas tienen preferencia sobre las columnas.
+
+La alineación por defecto de las celdas depende del agente de usuario. Sin embargo, los agentes de usuario deberían establecer el atributo por defecto según la direccionalidad actual (es decir, que no sea "left" en todos los casos).
+
+Los agentes de usuario que no soporten el valor "justify" del atributo align deberían usar en su lugar el valor heredado de la direccionalidad.
+Nota. Obsérvese que una celda puede heredar un atributo no de su padre sino de la primera celda de un tramo. Esta es una excepción a las reglas generales de herencia de atributos.
+11.3.3 Márgenes de las celdas
+
+Definiciones de atributos
+
+cellspacing = longitud [CN]
+    Este atributo especifica cuánto espacio debería dejar el agente de usuario entre el lado izquierdo de la tabla y el lado izquierdo de la columna que está más a la izquierda, entre la parte superior de la tabla y el lado superior de la fila que está más arriba, y lo mismo para los lados derecho e inferior. El atributo también especifica la cantidad de espacio entre celdas.
+cellpadding = longitud [CN]
+    Este atributo especifica la cantidad de espacio entre el borde de la celda y sus contenidos. Si el valor de este atributo es una longitud en píxeles, los cuatro bordes deberían estar a esta distancia de los contenidos. Si el valor del atributo es una longitud porcentual, los bordes superior e inferior deberían estar igualmente separados del contenido según un porcentaje del espacio vertical disponible, y los bordes izquierdo y derecho deberían estar igualmente separados de los contenidos según un porcentaje del espacio horizontal disponible.
+
+Estos dos atributos controlan el espacio entre y dentro de las celdas. La siguiente ilustración explica cuál es la relación entre ellos:
+
+Imagen que ilustra cómo se relacionan los atributos cellspacing y cellpadding
+
+En el siguiente ejemplo, el atributo cellspacing especifica que las celdas deberían estar separadas entre sí y hasta el marco de la tabla por veinte píxeles. El atributo cellpadding especifica que el margen superior de la celda y el margen inferior de la celda estarán separados de los contenidos de la celda por el 10% del espacio vertical disponible (para un total del 20%). Análogamente, el borde izquierdo de la celda y el borde derecho de la celda estarán separados de los contenidos de la celda por el 10% del espacio horizontal disponible (para un total del 20%).
+
+<TABLE cellspacing="20" cellpadding="20%">
+<TR> <TD>Dato1 <TD>Dato2 <TD>Dato3
+</TABLE>
+
+Si una tabla o columna dada tiene una anchura fija, cellspacing y cellpadding pueden requerir más espacio que el asignado. Los agentes de usuario pueden dar a estos atributos precedencia sobre el atributo width cuando existan conflictos, pero no necesitan hacerlo.
+11.4 Representación de tablas por agentes de usuario no visuales
+11.4.1 Asociación de información de encabezado con celdas de datos
+
+Los agentes de usuario no visuales tales como sintetizadores de voz o dispositivos Braille pueden usar los siguientes atributos de los elementos TD y TH para representar las celdas de las tablas más intuitivamente:
+
+    * Para una celda de datos dada, el atributo headers enumera las celdas que proporcionan información de encabezado pertinente. Para ello, se debe dar un nombre a cada celda de encabezado por medio del atributo id. Obsérvese que no siempre es posible hacer una distinción clara entre las celdas que son de encabezado y las celdas de datos. Para aquellas celdas en que la diferencia no es clara, debería usar el elemento TD junto con los atributos id o scope.
+    * Para una celda de encabezado dada, el atributo scope le dice al agente de usuario las celdas de datos para las cuales proporciona información esta celda de encabezado. Los autores pueden optar por usar este atributo en lugar de headers si lo encuentran más conveniente; los dos atributos realizan la misma función. El atributo headers es necesario generalmente cuando se colocan los encabezados en posiciones irregulares con respecto a los datos a los que se aplican.
+    * El atributo abbr especifica un encabezado abreviado para celdas de encabezado de modo que los agentes de usuario puedan representar la información de encabezado más rápidamente.
+
+En el siguiente ejemplo, asignamos información de encabezado a celdas por medio del atributo headers. Todas las celdas de una misma columna se refieren a la misma celda de encabezado (a través del atributo id).
+
+<TABLE border="1" 
+       summary="Esta tabla muestra el número de tazas
+                de café consumidas por cada senador, el tipo 
+                de café (descafeinado o normal), y si lo 
+                toma con azúcar.">
+<CAPTION>Tazas de café consumidas por cada senador</CAPTION>
+<TR>
+   <TH id="t1">Nombre</TH>
+   <TH id="t2">Tazas</TH>
+   <TH id="t3" abbr="Tipo">Tipo de Café</TH>
+   <TH id="t4">¿Azúcar?</TH>
+<TR>
+   <TD headers="t1">T. Sexton</TD>
+   <TD headers="t2">10</TD>
+   <TD headers="t3">Espresso</TD>
+   <TD headers="t4">No</TD>
+<TR>
+   <TD headers="t1">J. Dinnen</TD>
+   <TD headers="t2">5</TD>
+   <TD headers="t3">Descafeinado</TD>
+   <TD headers="t4">Sí</TD>
+</TABLE>
+
+Un sintetizador de voz podría representar esta tabla de la forma siguiente:
+
+Título:  Tazas de café consumidas por cada senador
+Resumen: Esta tabla muestra el número de tazas
+         de café consumidas por cada senador, el tipo 
+         de café (descafeinado o normal), y si lo 
+         toma con azúcar.
+Nombre: T. Sexton,  Tazas: 10,   Tipo: Espresso,  Azúcar: No
+Nombre: J. Dinnen,  Tazas: 5,    Tipo: Decaf,     Azúcar: Sí
+
+Observe como se abrevia el encabezado "Tipo de Café" a "Tipo" usando el atributo abbr.
+
+Aquí tenemos el mismo ejemplo, utilizando el atributo scope en lugar del atributo headers. Obsérvese el valor "col" del atributo scope, que significa "todas las celdas de esta columna":
+
+<TABLE border="1" 
+       summary="Esta tabla muestra el número de tazas
+                de café consumidas por cada senador, el tipo 
+                de café (descafeinado o normal), y si lo 
+                toma con azúcar.">
+<CAPTION>Tazas de café consumidas por cada senador</CAPTION>
+<TR>
+   <TH scope="col">Nombre</TH>
+   <TH scope="col">Tazas</TH>
+   <TH scope="col" abbr="Tipo">Tipo de Café</TH>
+   <TH scope="col">¿Azúcar?</TH>
+<TR>
+   <TD>T. Sexton</TD>
+   <TD>10</TD>
+   <TD>Espresso</TD>
+   <TD>No</TD>
+<TR>
+   <TD>J. Dinnen</TD>
+   <TD>5</TD>
+   <TD>Descafeinado</TD>
+   <TD>Sí</TD>
+</TABLE>
+
+Aquí hay un ejemplo algo más complejo que ilustra otros valores del atributo scope:
+
+<TABLE border="1" cellpadding="5" cellspacing="2"
+  summary="Cursos de historia ofrecidos en la comunidad de Bath
+           ordenados por nombre del curso, tutor, resumen,
+           código y tasas">
+  <TR>
+    <TH colspan="5" scope="colgroup">
+       Cursos de la Comunidad -- Bath Otoño de 1997
+    </TH>
+  </TR>
+  <TR>
+    <TH scope="col" abbr="Nombre">Nombre del Curso</TH>
+    <TH scope="col" abbr="Tutor">Tutor del Curso</TH>
+    <TH scope="col">Resumen</TH>
+    <TH scope="col">Código</TH>
+    <TH scope="col">Tasas</TH>
+  </TR>
+  <TR>
+    <TD scope="row">Tras la Guerra Civil</TD>
+    <TD>Dr. John Wroughton</TD>
+    <TD>
+       El curso examinará los años turbulentos que siguieron
+       a 1646 en Inglattera. <EM> Reuniones cada 6 semanas
+       a partir del lunes 13 de octubre.</EM>
+    </TD>
+    <TD>H27</TD>
+    <TD>&pound;32</TD>
+  </TR>
+  <TR>
+    <TD scope="row">Una introducción a la Inglaterra anglosajona</TD>
+    <TD>Mark Cottle</TD>
+    <TD>
+       Este curso de un día presenta una reconstrucción
+       de los anglosajones y de su sociedad en el
+       período medieval temprano. <EM>Sábado 18 de Octubre.</EM>
+    </TD>
+    <TD>H28</TD>
+    <TD>&pound;18</TD>
+  </TR>
+  <TR>
+    <TD scope="row">La gloriosa Grecia</TD>
+    <TD>Valerie Lorenz</TD>
+    <TD>
+      Lugar de nacimiento de la democracia y la filosofía, patria del teatro,
+      hogar de la discusión. Los romanos pueden haberlo hecho, pero los
+      griegos lo hicieron primero. <EM>Clases matutinas del sábado 25
+      de Octubre de 1997</EM>
+    </TD>
+    <TD>H30</TD>
+    <TD>&pound;18</TD>
+  </TR>
+</TABLE>
+
+Un agente de usuario gráfico podría representar esto así:
+
+Una tabla con celdas fusionadas
+
+Obsérvese que se usa el atributo scope con el valor "row". Aunque la primera celda de cada fila contiene datos y no información de encabezado, el atributo scope hace que la celda de datos se comporte como una celda de encabezado de fila. Esto permite a los sintetizadores de voz proporcionar el nombre del curso en cuestión si se le pide, o pronunciarlo inmediatamente antes del contenido de cada celda.
+11.4.2 Categorización de celdas
+
+Los usuarios que navegan por una tabla con un agente de usuario basado en voz pueden querer oír una explicación de los contenidos de una celda además de los propios contenidos. Un modo en que el agente de usuario podría proporcionar una explicación es pronunciando la información de encabezado asociada antes de pronunciar los contenidos de la celda de datos (véase la sección sobre la asociación de información de encabezado con celdas de datos).
+
+Los usuarios también pueden querer información sobre más de una celda, en cuyo caso proporcionar información de encabezado a nivel de celda (con headers, scope y abbr) puede no ser lo más adecuado. Considérese la tabla siguiente, que clasifica los gastos de comida, hotel y transporte en dos localidades (San Jose y Seattle) a lo largo de varios días:
+
+Imagen de una tabla que enumera gastos de viaje en dos localidades: San Jose y Seattle, por fecha y categoría (comidas, hotel y transporte), mostrados con subtítulos
+
+Los usuarios podrían querer extraer información de la tabla por medio de preguntas:
+
+    * "¿Cuánto gasté en todas mis comidas?"
+    * "¿Cuánto gasté en comida el 25 de agosto?"
+    * "¿Cuánto gasté en total en San Jose?"
+
+Cada pregunta implica un cálculo por parte del agente de usuario que puede implicar a cero o más celdas. Para determinar, por ejemplo, el coste de las comidas del 25 de agosto, el agente de usuario debe saber qué celdas de la tabla se refieren a "Comidas" (todas ellas), y cuáles se refieren a "Fechas" (en particular al 25 de agosto), y encontrar la intersección de los dos conjuntos.
+
+Para permitir este tipo de preguntas, el modelo de tablas de HTML 4 permite a los autores colocar encabezados y datos de tabla en categorías. Por ejemplo, para la tabla de gastos de viaje, un autor podría agrupar las celdas de encabezado "San Jose" y "Seattle" en la categoría "Localidad", los encabezados "Comidas", "Hotel", y "Transporte" en la categoría "Gastos", y los cuatro días en la categoría "Fecha". Las tres preguntas anteriores podrían tener entonces los significados siguientes:
+
+    * "¿Cuánto gasté en todas mis comidas?" significa "¿Cuáles son las celdas de datos de la categoría "Gastos=Comidas"?
+    * "¿Cuánto gasté en comidas el 25 de agosto?" significa "¿Cuáles son las celdas de datos de las categorías "Gastos=Comidas" y "Fecha=25/08/1997"?
+    * "¿Cuánto gasté en total en San Jose?" significa "¿Cuáles son las celdas de datos de las categorías "Gastos=Comidas, Hotel, Transporte" y "Localidad=San Jose?"
+
+Los autores categorizan una celda de encabezado o de datos estableciendo el atributo axis de la celda. Por ejemplo, en la tabla de gastos de viaje, la celda que contiene la información "San Jose" podría ser colocada en la categoría "Localidad" como sigue:
+
+  <TH id="a6" axis="localidad">San Jose</TH>
+
+Cualquier celda que contenga información relacionada con "San Jose" debería referirse a esta celda de encabezado o bien por medio del atributo headers o bien por medio del atributo scope. Así, los gastos en comidas del 25/08/1997 deberían codificarse para que se refirieran al atributo id de la celda de encabezado "San Jose" (cuyo valor aquí es "a6"):
+
+  
+  <TD headers="a6">37.74</TD>
+
+Cada atributo headers proporciona una lista de referencias a valores id. Los autores pueden así categorizar una celda dada de diferentes maneras (o dicho de otra manera, por cualquier número de "headers", de ahí su nombre).
+
+Abajo hemos codificado la tabla de gastos de viaje con información sobre categorías:
+
+<TABLE border="1"
+       summary="Esta tabla resume los gastos
+                producidos durante los viajes a
+                San Jose y a Seattle en agosto">
+<CAPTION>
+  Informe de Gastos de Viaje
+</CAPTION>
+<TR>
+  <TH></TH>
+  <TH id="a2" axis="gastos">Comidas</TH>
+  <TH id="a3" axis="gastos">Hotel</TH>
+  <TH id="a4" axis="gastos">Transporte</TH>
+  <TD>subtotales</TD>
+</TR>
+<TR>
+  <TH id="a6" axis="localidad">San Jose</TH>
+  <TH></TH>
+  <TH></TH>
+  <TH></TH>
+  <TD></TD>
+</TR>
+<TR>
+  <TD id="a7" axis="fecha">25/08/1997</TD>
+  <TD headers="a6 a7 a2">37.74</TD>
+  <TD headers="a6 a7 a3">112.00</TD>
+  <TD headers="a6 a7 a4">45.00</TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TD id="a8" axis="fecha">26/08/1997</TD>
+  <TD headers="a6 a8 a2">27.28</TD>
+  <TD headers="a6 a8 a3">112.00</TD>
+  <TD headers="a6 a8 a4">45.00</TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TD>subtotales</TD>
+  <TD>65.02</TD>
+  <TD>224.00</TD>
+  <TD>90.00</TD>
+  <TD>379.02</TD>
+</TR>
+<TR>
+  <TH id="a10" axis="localidad">Seattle</TH>
+  <TH></TH>
+  <TH></TH>
+  <TH></TH>
+  <TD></TD>
+</TR>
+<TR>
+  <TD id="a11" axis="fecha">27/08/1997</TD>
+  <TD headers="a10 a11 a2">96.25</TD>
+  <TD headers="a10 a11 a3">109.00</TD>
+  <TD headers="a10 a11 a4">36.00</TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TD id="a12" axis="fecha">28/08/1997</TD>
+  <TD headers="a10 a12 a2">35.00</TD>
+  <TD headers="a10 a12 a3">109.00</TD>
+  <TD headers="a10 a12 a4">36.00</TD>
+  <TD></TD>
+</TR>
+<TR>
+  <TD>subtotales</TD>
+  <TD>131.25</TD>
+  <TD>218.00</TD>
+  <TD>72.00</TD>
+  <TD>421.25</TD>
+</TR>
+<TR>
+  <TH>Totales</TH>
+  <TD>196.27</TD>
+  <TD>442.00</TD>
+  <TD>162.00</TD>
+  <TD>800.27</TD>
+</TR>
+</TABLE>
+
+Obsérvese que al codificar la tabla de esta manera, los agentes de usuario pueden evitar confundir al usuario con información no deseada. Por ejemplo, si un sintetizador de voz tuviera que pronunciar todas las cifras de la columna "Comidas" de esta tabla en respuesta a la pregunta "¿Cuánto me gasté en comidas?", un usuario no podría distinguir los gastos diarios subtotales de los totales. Categorizando cuidadosamente los datos de las celdas, los autores permiten a los agentes de usuario hacer distinciones semánticas importantes en la representación.
+
+Por supuesto, no hay límites en cuanto a la forma en que los autores pueden categorizar la información de una tabla. Por ejemplo, en la tabla de gastos de viaje, podríamos añadir las categorías adicionales "subtotales" y "totales".
+
+Esta especificación no exige a los agentes de usuario que traten la información proporcionada por el atributo axis, ni hace ninguna recomendación sobre cómo pueden presentar los agentes de usuario la información de axis a los usuarios, ni sobre cómo pueden preguntar los usuarios al agente de usuario sobre esta información.
+
+Sin embargo, los agentes de usuario, en particular los sintetizadores de voz, podrían extraer la información que las distintas celdas resultado de una pregunta tienen en común. Por ejemplo, si el usuario pregunta "¿Cuánto me gasté en comidas en San Jose?", el agente de usuario podría determinar primero las celdas en cuestión (25/08/1997: 37.74, 26/08/1997: 27.28), y después representar esta información. Un agente de usuario que pronuncie esta información podría leerla así:
+
+   Localidad: San Jose. Fecha: 25/08/1997. Gastos, Comidas: 37.74
+   Localidad: San Jose. Fecha: 26/08/1997. Gastos, Comidas: 27.28
+
+o más compacto:
+
+   San Jose, 25/08/1997, Comidas: 37.74
+   San Jose, 26/08/1997, Comidas: 27.28
+
+Se obtendría una representación aún más económica sacando la información común y reordenándola:
+
+   San Jose, Comidas, 25/08/1997: 37.74
+                      26/08/1997: 27.28
+
+Los agentes de usuario que soporten este tipo de representación deberían permitir a los usuarios personalizar la representación (p.ej., con hojas de estilo).
+11.4.3 Algoritmo para encontrar información de encabezado
+
+En ausencia de información de encabezado de los atributos scope o headers, los agentes de usuario pueden construir información de encabezado de acuerdo con el siguiente algoritmo. El fin del algoritmo es encontrar una lista ordenada de encabezados. (En la descripción del algoritmo que sigue, se supone que la direccionalidad de la tabla es de izquierda a derecha.)
+
+    * Primero, buscar hacia la izquierda de la posición de la celda para encontrar celdas de encabezado de fila. Después buscar hacia arriba para encontrar celdas de encabezado de columna. La búsqueda en una dirección dada se detiene cuando se alcanza el borde de la tabla o cuando se encuentra una celda de datos tras una celda de encabezado.
+    * Los encabezados de fila se insertan en la lista en el orden en que aparecen en la tabla. Para tablas de izquierda a derecha, los encabezados se insertan de izquierda a derecha.
+    * Los encabezados de columna se insertan después de los encabezados de fila, en el orden en que aparecen en la tabla, de arriba a abajo.
+    * Si una celda de encabezado tiene el atributo headers establecido, entonces los encabezados a que hace referencia este atributo se insertan en la lista y la búsqueda se detiene en la dirección actual.
+    * Las celdas TD que tengan el atributo axis establecido se tratan también como celdas de encabezado.
+
+11.5 Tabla de muestra
+
+Esta muestra ilustra el agrupamiento de filas y columnas. Este ejemplo está adaptado de "Developing International Software", por Nadine Kano.
+
+En "arte ascii", la siguiente tabla:
+
+<TABLE border="2" frame="hsides" rules="groups"
+       summary="Páginas de códigos soportadas por las diferentes versiones
+                de MS Windows.">
+<CAPTION>PAGINAS DE CODIGOS SOPORTADAS POR MICROSOFT WINDOWS</CAPTION>
+<COLGROUP align="center">
+<COLGROUP align="left">
+<COLGROUP align="center" span="2">
+<COLGROUP align="center" span="3">
+<THEAD valign="top">
+<TR>
+<TH>ID<BR>Code-Page
+<TH>Nombre
+<TH>ACP
+<TH>OEMCP
+<TH>Windows<BR>NT 3.1
+<TH>Windows<BR>NT 3.51
+<TH>Windows<BR>95
+<TBODY>
+<TR><TD>1200<TD>Unicode (BMP de ISO/IEC-10646)<TD><TD><TD>X<TD>X<TD>*
+<TR><TD>1250<TD>Windows 3.1 Europa del Este<TD>X<TD><TD>X<TD>X<TD>X
+<TR><TD>1251<TD>Windows 3.1 Cirílico<TD>X<TD><TD>X<TD>X<TD>X
+<TR><TD>1252<TD>Windows 3.1 US (ANSI)<TD>X<TD><TD>X<TD>X<TD>X
+<TR><TD>1253<TD>Windows 3.1 Griego<TD>X<TD><TD>X<TD>X<TD>X
+<TR><TD>1254<TD>Windows 3.1 Turco<TD>X<TD><TD>X<TD>X<TD>X
+<TR><TD>1255<TD>Hebreo<TD>X<TD><TD><TD><TD>X
+<TR><TD>1256<TD>Árabe<TD>X<TD><TD><TD><TD>X
+<TR><TD>1257<TD>Bálticp<TD>X<TD><TD><TD><TD>X
+<TR><TD>1361<TD>Coreano (Johab)<TD>X<TD><TD><TD>**<TD>X
+<TBODY>
+<TR><TD>437<TD>MS-DOS Estados Unidos<TD><TD>X<TD>X<TD>X<TD>X
+<TR><TD>708<TD>Árabe (ASMO 708)<TD><TD>X<TD><TD><TD>X
+<TR><TD>709<TD>Árabe (ASMO 449+, BCON V4)<TD><TD>X<TD><TD><TD>X
+<TR><TD>710<TD>Árabe (Árabe Transparente)<TD><TD>X<TD><TD><TD>X
+<TR><TD>720<TD>Árabe (ASMO Transparente)<TD><TD>X<TD><TD><TD>X
+</TABLE>
+
+se representaría de forma parecida a ésta:
+
+              PAGINAS DE CODIGOS SOPORTADAS POR MICROSOFT WINDOWS
+===============================================================================
+    ID    | Nombre                       | ACP  OEMCP | Windows Windows Windows
+Code-Page |                              |            |  NT 3.1 NT 3.51    95
+-------------------------------------------------------------------------------
+   1200   | Unicode (BMP de ISO 10646)   |            |    X       X       *
+   1250   | Windows 3.1 Europa del Este  |  X         |    X       X       X
+   1251   | Windows 3.1 Cirílico         |  X         |    X       X       X
+   1252   | Windows 3.1 US (ANSI)        |  X         |    X       X       X
+   1253   | Windows 3.1 Griego           |  X         |    X       X       X
+   1254   | Windows 3.1 Turco            |  X         |    X       X       X
+   1255   | Hebreo                       |  X         |                    X
+   1256   | Árabe                        |  X         |                    X
+   1257   | Báltico                      |  X         |                    X
+   1361   | Coreano (Johab)              |  X         |            **      X
+-------------------------------------------------------------------------------
+    437   | MS-DOS Estados Unidos        |        X   |    X       X       X
+    708   | Árabe (ASMO 708)             |        X   |                    X
+    709   | Árabe (ASMO 449+, BCON V4)   |        X   |                    X
+    710   | Árabe (Árabe Transparente)   |        X   |                    X
+    720   | Árabe (ASMO Transparente)    |        X   |                    X
+===============================================================================
+
+Un agente de usuario gráfico podría representarlo así:
+
+Una tabla con filas y columnas agrupadas
+
+Este ejemplo ilustra cómo puede usarse COLGROUP para agrupar columnas y para establecer la alineación por defecto de las columnas. Análogamente se utiliza TBODY para agrupar filas. Los atributos frame y rules dicen al agente de usuario qué bordes y líneas de división representar.
+anterior  siguiente  contenidos  elementos  atributos  índice

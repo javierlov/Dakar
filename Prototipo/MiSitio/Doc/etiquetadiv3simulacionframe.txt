@@ -1,0 +1,224 @@
+Volver al índice Ejemplos de posicionamiento absoluto
+
+En esta página se tratan los siguientes temas:
+
+    * Simulación de frames 1
+    * Simulación de frames 2
+
+Simulación de frames 1
+
+Los frames son una etiqueta introducida en HTML 4.0 y que permite dividir la pantalla en varias zonas en las que se pueden mostrar documentos distintos. Los frames fueron muy populares a finales de los 90 pues permitían diseños de página atractivos y facilitaban el mantenimiento de sitios grandes. Pero los frames crean también problemas de navegabilidad y de indexado de los sitios lo que, unido a la utilización de lenguajes de programación para la generación de las páginas en los sitios grandes, ha acabado desaconsejando su uso.
+
+Una característica de los frames es que permite utilizar un enlace situado en una de las zonas de la página para cambiar el contenido de otra zona. Esa característica es la que se va a simular aquí utilizando posicionamiento.
+
+El resultado es que haciendo clic en un enlace se cambia el contenido visible de la página. El ejemplo siguiente se puede probar en esta misma página o bien abrirlo en otra página haciendo clic derecho sobre el ejemplo en Firefox y eligiendo la opción "Este marco > Abrir marco en una pestaña nueva".
+
+Enlace a ejemplo Simulación de frames 1 b
+
+ERROR (no puede mostrarse el objeto)
+
+La estructura es la siguiente:
+
+    * El índice se encuentra en una división con id (o clase), en este caso "indice".
+    * Cada uno de los apartados se encuentran en una división, con id .
+    * Las dos divisiones de los apartados se encuentran en una división con id (o clase), en este caso "contenido".
+
+Índice
+	
+
+    * La división "indice" tiene id para darle posicionamiento
+
+Contenido
+
+Apartado 1
+
+Apartado 2
+	
+
+    * Las divisiones de los apartados tienen id para servir de destinos de los enlaces
+    * La división "contenido" tiene id para darle posicionamiento
+
+El código HTML es el siguiente:
+Correcto en Firefox Correcto en Internet Explorer Correcto en Chrome 	
+
+<h1>Simulación de frames 1</h1>
+
+<div id="indice">
+<ul>
+  <li><a href="#Apartado1">Apartado 1</a></li>
+  <li><a href="#Apartado2">Apartado 2</a></li>
+</ul>
+</div>
+
+<div id="contenido">
+<div id="Apartado1">
+<h2>Apartado 1</h2>
+<p>Este es el apartado 1</p>
+</div>
+
+<div id="Apartado2">
+<h2>Apartado 2</h2>
+<p>Este es el apartado 2</p>
+</div>
+</div>
+        
+
+	
+
+ERROR (no puede mostrarse el objeto)
+
+El código CSS es el siguiente:
+Correcto en Firefox Correcto en Internet Explorer Correcto en Chrome 	
+
+div#indice {
+  background-color: lightblue;
+  height: 70%;
+  left: 5%;
+  position: absolute;
+  top: 20%;
+  width: 15%;
+}
+
+div#contenido {
+  background-color: orange;
+  height: 70%;
+  left: 25%;
+  overflow: hidden;
+  position: absolute;
+  top: 20%;
+  width: 70%;
+}
+
+div div {
+  height: 100%;
+  width: 100%;
+}
+        
+
+	
+
+ERROR (no puede mostrarse el objeto)
+
+    * El posicionamiento de la división "indice" es absoluto.
+    * El posicionamiento de la división "contenido" es absoluto y hay que ocultar el texto que desborde.
+    * Las divisiones de los apartados no necesitan posicionamiento, basta con decir que la anchura y la altura es del 100%. Ese 100% se interpreta con respecto a la división "contenido".
+
+El motivo por el que cada vez sólo se ve uno de los apartados es que cada división de apartado tiene el mismo tamaño que la división "contenido" y lo que no cabe en la división "contenido" no se muestra. Al hacer clic en un enlace se muestra la división de apartado correspondiente.
+
+Volver al principio de la página
+Simulación de frames 2
+
+El ejemplo anterior se puede complicar introduciendo elementos con posicionamiento en las divisiones de los apartados, como puede verse en el ejemplo siguiente, en el que cada apartado incluye un enlace al otro apartado situado en la parte inferior derecha:
+
+Enlace a ejemplo Simulación de frames 2
+
+ERROR (no puede mostrarse el objeto)
+
+La estructura es la siguiente:
+
+    * El índice se encuentra en una división con id (o clase), en este caso "indice".
+    * Cada uno de los apartados se encuentran en una división, con id .
+    * Las dos divisiones de los apartados se encuentran en una división con id (o clase), en este caso "contenido".
+
+Índice
+	
+
+    * La división "indice" tiene id para darle posicionamiento
+
+Contenido
+
+Apartado 1
+
+Enlace al apartado 2
+
+Apartado 2
+
+Enlace al apartado 1
+	
+
+    * Las divisiones de los apartados tienen id para servir de destinos de los enlaces
+    * La división "contenido" tiene id para darle posicionamiento
+    * Los párrafos con enlaces tienen clase para darle posicionamiento
+
+El código HTML es el siguiente:
+Correcto en Firefox Correcto en Internet Explorer Correcto en Chrome 	
+
+<h1>Simulación de frames 2</h1>
+
+<div id="indice">
+<ul>
+  <li><a href="#Apartado1">Apartado 1</a></li>
+  <li><a href="#Apartado2">Apartado 2</a></li>
+</ul>
+</div>
+
+<div id="contenido">
+<div id="Apartado1">
+<h2>Apartado 1</h2>
+<p>Este es el apartado 1</p>
+<p class="enlace">Ir al <a href="#Apartado2">apartado 2</a></p>
+</div>
+
+<div id="Apartado2">
+<h2>Apartado 2</h2>
+<p>Este es el apartado 2</p>
+<p class="enlace">Volver al <a href="#Apartado1">apartado 1</a></p>
+</div>
+</div>
+        
+
+	
+
+ERROR (no puede mostrarse el objeto)
+
+El código CSS es el siguiente:
+Correcto en Firefox Correcto en Internet Explorer Correcto en Chrome 	
+
+div#indice {
+  background-color: lightblue;
+  height: 70%;
+  left: 5%;
+  position: absolute;
+  top: 20%;
+  width: 15%;
+}
+
+div#contenido {
+  background-color: orange;
+  height: 70%;
+  left: 25%;
+  overflow: hidden;
+  position: absolute;
+  top: 20%;
+  width: 70%;
+}
+
+div div {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+p.enlace {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+	
+
+ERROR (no puede mostrarse el objeto)
+
+    * El posicionamiento de la división "indice" es absoluto.
+    * El posicionamiento de la división "contenido" es absoluto y hay que ocultar el texto que desborde.
+    * A las divisiones de los apartados hay que darles anchura y altura del 100%. Ese 100% se interpreta con respecto a la división "contenido".
+    * Las divisiones de los apartados necesitan posicionamiento relativo, aunque no se desplacen de su posición. La propiedad position: relative es necesaria para que el posicionamiento de los elementos interiores (en este caso, de los párrafos con enlaces) se interprete con respecto a las divisiones de los apartados y no respecto a la división "contenido".
+    * Los párrafos tienen posicionamiento absoluto, pero sólo se ve un enlace cada vez porque ese posicionamiento se interpreta respecto de la división del apartado (el enlace de la otra división de apartado está oculta, igual que la división que lo contiene). Es importante señalar que si las divisiones de los apartados no tuvieran la propiedad position o la tuvieran con los valores static o absolute, entonces sí que se verían los dos párrafos superpuestos ya que su posición se interpretaría respecto a la división "contenido".
+
+Volver al principio de la página
+Esta página forma parte del curso "Páginas web HTML / XHTML y hojas de estilo CSS" disponible en http://www.mclibre.org
+Autor: Bartolomé Sintes Marco
+Última modificación: 13 de octubre de 2013
+
+Creative Commons License
+Esta obra está bajo una licencia de Creative Commons Reconocimiento-CompartirIgual 3.0 España.

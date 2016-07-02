@@ -1,0 +1,47 @@
+div.BotonGeneral{
+/*
+top:80%;
+left:90%;
+padding:15px; 
+width:20px; 
+height:25px; 
+*/
+position:absolute;
+text-align:center;
+letter-spacing:1px;
+font-size:15px;
+height:15px; 
+top:80%;
+padding:15px; 
+border:solid 1px #DEDEDE; 
+border-radius:5px;
+color:#333; 
+}
+
+#botonSieguiente{ 
+left:80%;
+width:20px; 
+} 
+
+#botonAnterior{ 
+left:70%;
+width:20px; 
+} 
+
+#botonInicio{ 
+left:50%;
+width:100px; 
+}
+
+#botonInfo{ 
+left:38%;
+width:120px; 
+} 
+
+div.BotonGeneral:hover{
+background:-moz-linear-gradient(#fff 0%,#DEDEDE 100%);
+color:blue; 
+font-size:16px;
+font:Bold;
+border:solid 1px #DEDEDE; 
+}

@@ -1,0 +1,53 @@
+Atributos Estándard de la Etiqueta <div>
+
+Estos atributos son soportados por todos los navegadores
+
+Logo de Internet Explorer : Internet Explorer     Logo de Firefox : Firefox     Logo de Google Chrome : Google Chrome     Logo de Opera : Opera     Logo de Safari : Safari    
+Atributos 	Valor 	Descripción
+class 	nombre de la clase 	Asigna un nombre de clase.
+El atributo class actúa:
+
+    * Como selector para las hojas de estilo(CSS), cuando se asigna información de estilo a un conjunto de elementos.
+    * Para procesos generales por parte del usuario.
+
+id 	nombre 	Asigna un nombre a un elemento.
+El atributo id actúa:
+
+    * Como selector para las hojas de estilo(CSS).
+    * Como vínculo destino para vínculos de hipertexto.
+    * Como medio de hacer referencia a un elemento en particular desde un script.
+    * Como nombre de un elemento object declarado.
+    * Para procesos generales por parte del usuario.
+
+style 	estilo 	Este atributo especifica información de estilo para el elemento actual.
+title 	nombre 	Este atributo ofrece información consultiva sobre el elemento para el cual se establece.
+dir 	ltr o rtl 	Especifica la dirección del texto.
+Valores posibles:
+
+    * ltr : De izquierda a derecha (left to right).
+    * rtl : De derecha a izquierda (right to left).
+
+lang 	código de lenguaje 	Especifica el idioma base de los valores de los atributos y del texto contenido en un elemento.
+El atributo lang es útil para:
+
+    * Ayudar a los motores de búsqueda.
+    * Ayudar a los sintetizadores de voz.
+    * Ayudar al agente de usuario a hacer decisiones sobre separación de palabras, ligaduras, y espaciado.
+    * Ayudar a los verificadores de ortografía y gramática.
+
+Eventos de la Etiqueta <div>
+
+Los eventos son soportados por todos los navegadores
+
+Logo de Internet Explorer : Internet Explorer     Logo de Firefox : Firefox     Logo de Google Chrome : Google Chrome     Logo de Opera : Opera     Logo de Safari : Safari    
+Evento 	Valor 	Descripción
+onkeydown 	script 	El script corre cuando se pulsa una tecla.
+onkeypress 	script 	El script corre cuando se pulsa y se suelta una tecla.
+onkeyup 	script 	El script corre cuando una tecla se suelta.
+onclick 	script 	El script corre cuando se hace clic con el mouse.
+ondblclick 	script 	El script corre cuando se hace doble clic con el mouse.
+onmousedown 	script 	El script corre cuando el botón del mouse se pulsa cuando está encima de un elemento.
+onmousemove 	script 	El script corre cuando el mouse se mueve mientras está sobre un elemento.
+onmouseout 	script 	El script corre cuando el mouse se aparta de un elemento.
+onmouseover 	script 	El script corre cuando el mouse se sitúa sobre un elemento.
+onmouseup 	script 	El script corre cuando el botón del mouse se suelta cuando está encima de un elemento.

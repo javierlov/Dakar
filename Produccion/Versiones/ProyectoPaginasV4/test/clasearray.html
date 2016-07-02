@@ -1,0 +1,76 @@
+<html>
+<head> </head>
+
+<script type="text/javascript" src="../js/Paginas.js"></script>
+<script type="text/javascript" src="../js/Tareas.js"></script>
+<script type="text/javascript" src="../js/Proyectos.js"></script>
+<link rel="StyleSheet" href="../stylesbuttons.css" type="text/css">
+
+<script type="text/javascript">
+  
+  window.addEventListener('load', inicio, false);
+  
+	function inicio(){								
+		var a = new Pagina(11);		
+		//a.SetNumero(8);
+		document.write(a.ImprimeInfo());						
+		document.write('<br>  --------------------<br>');		
+		var b = new PaginaIndice(25);	
+		//b.titulo = 'Sin titulo'			
+		b.SetNumero(8);
+		document.write(b.ImprimeInfo());		
+		document.write('<br>  --------------------<br>');		
+		
+		var pt = new PaginaTexto();		
+		document.write(pt.ImprimeInfo());		
+		document.write('<br>Tar--------------------<br>');
+/*
+		var dias = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]; 
+		for(i in dias) {
+			document.write('<br>'); 
+			document.write(dias[i]);
+		}
+		document.write('<br>Tar--------------------<br>');
+	*/	
+		var tar = new Tarea();		
+		tar.AgregarTarea(a);
+		tar.AgregarTarea(b);
+		tar.AgregarTarea(pt);
+		
+		var mostrar  = tar.MostrarTareas();
+		for(var i = 0; i < mostrar.length; i++)
+		{			
+			var a1 = mostrar;
+			document.write('<br>'); 
+			document.write(a1[i].numero + '.');						
+			document.write(a1[i].titulo + '.');						
+			document.write(a1[i].tipo + '.');						
+		}
+		
+		document.write('<br>Tar--------------------<br>');
+	
+		var pro = new Proyecto();		
+		pro.AgregarProyecto(tar);
+		
+		var mp  = pro.MostrarProyectos();
+		for(var i = 0; i < mp.length; i++)
+		{			
+			var p1 = mp;
+			document.write('<br>'); 
+			document.write(a1[i].numero + '.');						
+			document.write(a1[i].titulo + '.');						
+			document.write(a1[i].tipo + '.');						
+		}
+		
+	}
+
+
+</script>
+
+<body>
+	<a href="#" class="button">
+	<span class="add">Add to your bookmark</span>
+	</a>
+	<button type='button'  ID='nextpage'> >> </button>
+</body>
+</html>

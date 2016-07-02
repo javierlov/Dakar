@@ -1,0 +1,173 @@
+h1{
+	opacity:1.0;
+	color:green;
+	filter: shadow(color=#555555, direction=135, strength=2);
+}
+
+p {
+font: normal small-caps bold 1.5em/1.5 Arial, sans-serif;
+}
+div {
+/*
+margin: 5px 3px;
+padding: 3px 5px 2px 7px;
+*/
+}
+body {
+	/* background: #FFF url("imagenes/Lighthouse.jpg") no-repeat 12px 4px;*/
+	color:white;
+}
+
+.contenedor-etiquetas
+{
+	background:#000;
+	width:450px;	
+	box-shadow: 3px 3px 5px gray;
+	border-radius: 9px;
+}
+
+.contenedor-principal{
+	width:60%;
+	border:1px solid black;
+	overflow: auto;
+	color:blue;
+}
+
+.contenedor-principal div
+{
+float:left;
+border:2px solid gray;
+background:#DDDDDD;
+width:120px;
+margin:10px;
+text-align:center;
+}
+
+#contenedor {
+padding:20px;
+margin:10px;
+background:none;
+border: thick solid #000;
+width:50%;
+height:auto;
+overflow: auto;
+}
+#izquierda {
+margin:10px;
+float: left;
+width: 40%;
+color:green;
+}
+#derecha {
+margin:0px;
+float: right;
+width: 40%;
+color:brown;
+}
+
+#contenedorCol {
+display: table;
+width:auto;
+height:1%;
+}
+#contenidosCol{
+display: table-row;
+border: 1px solid #fff;
+}
+#columna1Col, #columna2Col, #columna3Col , #columna4Col {
+	display: table-cell;
+	color:olive;
+	border: 0pt solid white;
+	padding:1px;
+	margin:0px;
+	opacity:1.0;
+}
+
+
+.recorteFoto1a, .recorteFoto1b, .recorteFoto1c, .recorteFoto1d,
+.recorteFoto2a, .recorteFoto2b, .recorteFoto2c, .recorteFoto2d {
+/*
+padding-left: 0px;
+padding-top: 0px;
+width:90%;
+opacity:.7;
+*/
+height: 200px;
+width: 200px;
+line-height: 0px;
+background-image: url("imagenes/Desert.jpg");
+background-repeat: no-repeat;
+border:1px solid white;
+}
+
+.recorteFoto1a {background-position: -200px -200px;}
+.recorteFoto1b {background-position: -400px -200px;}
+.recorteFoto1c {background-position: -600px -200px;}
+.recorteFoto1d {background-position: -800px -200px;}
+
+.recorteFoto2a {background-position: -200px -400px;}
+.recorteFoto2b {background-position: -400px -400px;}
+.recorteFoto2c {background-position: -600px -400px;}
+.recorteFoto2d {background-position: -800px -400px;}
+
+
+.recorteFoto1a:hover {background-position: -210px -210px; }
+.recorteFoto1b:hover {background-position: -410px -210px; }
+.recorteFoto1c:hover {background-position: -610px -210px; }
+.recorteFoto1d:hover {background-position: -810px -210px; }
+
+.recorteFoto2a:hover {background-position: 0px -240px; }
+.recorteFoto2b:hover {background-position: 0px -240px; }
+.recorteFoto2c:hover {background-position: 0px -240px; }
+.recorteFoto2d:hover {background-position: 0px -240px; }
+
+
+/*
+/*
+*/
+
+ul > li {
+border: 1px solid #FFF;
+border-width: 1px 0 0 0;
+}
+
+li > a {
+background-color: #666;
+color: white;
+font-weight: bold;
+}
+
+
+ul {
+background-color: blue;
+border-bottom: 1px dash #999;
+list-style: none;
+margin: 15px;
+width: 450px;
+padding-left: 0;
+}
+
+li{
+background-color: #FFF;
+border: 1px dotted #999;
+border-bottom-width: 0;
+font: 1.2em/1.333 Verdana, Arial, sans-serif;
+}
+
+li a {
+color: #000;
+display: block;
+height: auto;
+padding: 0.25em 0;
+text-align: center;
+text-decoration: none;
+}
+
+li:first-child a { color: yellow; }
+li a:hover { background-color: #999;  text-shadow: 2px 2px 4px #333;}
+
+p > span { color: red; }
+p > a  > b { color: orange; }
+
+
+

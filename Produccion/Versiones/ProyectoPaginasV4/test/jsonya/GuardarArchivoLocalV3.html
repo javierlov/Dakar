@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <title>Saving Files Locally</title>
+</head>
+
+<body id="bodyElement">
+  <h1>Saving Files Locally</h1>
+  <script>
+    function requiredFeaturesSupported() {
+      return ( BlobBuilderSupported() && msSaveOrOpenBlobSupported() );
+    }
+    
+    function BlobBuilderSupported() {
+      if (window.BlobBuilder) {
+        // No change needed - the W3C standard API will be used by default.
+      } 
+      else if (window.MSBlobBuilder) {
+        window.BlobBuilder = window.MSBlobBuilder;
+      }
+      else if (window.WebKitBlobBuilder) {
+        window.BlobBuilder = window.WebKitBlobBuilder;
+      }
+      else if (window.MozBlobBuilder) {
+        window.BlobBuilder = window.MozBlobBuilder;
+      }   
+      else {
+        document.getElementById('bodyElement').innerHTML = "<h1>The BlobBuilder API is not supported - try upgrading your browser to the latest version.</h1>";
+        return false;
+      } // if-else
+      
+      return true;
+    } // BlobBuilderSupported
+    
+    function msSaveOrOpenBlobSupported() {
+      if (!window.navigator.msSaveOrOpenBlob) {
+        document.getElementById('bodyElement').innerHTML = "<h1>The msSaveOrOpenBlob API is not supported - try upgrading your version of IE to the latest version.</h1>";            
+        return false;
+      }
+      
+      return true;
+    } // msSaveOrOpenBlobSupported
+        
+    if (requiredFeaturesSupported()) {
+      var builderObject = new BlobBuilder(); // Create a blob builder object so that we can append content to it.
+      
+      builderObject.append("I scream, you scream, we all scream for ice scream."); // Append some content to the builder object.
+      window.navigator.msSaveBlob(builderObject.getBlob(), 'msSaveBlob_testFile.txt'); // Move the builder object content to a blob and save it to a file - buildObject is now devoid of any content.
+      alert('File saved using msSaveBlob() - note the single "Save" button below.');
+      
+      builderObject.append("Before you insult a person, walk a mile in their shoes. That way, when you insult them, you'll be a mile away - and have their shoes."); // Appending to a cleared buildObject due to the prior builderObject.getBlob() call.
+      window.navigator.msSaveOrOpenBlob(builderObject.getBlob(), 'msSaveBlobOrOpenBlob_testFile.txt'); // Now the user has the option of clicking the Save button and the Open button.
+      alert('File saved using msSaveOrOpenBlob() - note the two "Open" and "Save" buttons below.');      
+    }
+  </script>
+</body>
+
+</html>

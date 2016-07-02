@@ -1,0 +1,152 @@
+* {
+  margin:0;
+  padding:0;
+}
+
+body {
+  width: 90%;
+  margin: 0 auto;
+}
+
+#cabecera{
+  background-color: #eee;
+  padding: 10px;
+  margin: 10px;
+}
+
+#pie {
+  background-color: #eee;
+  padding: 10px;
+  margin: 10px;
+  clear:both;
+}
+
+.columna1, .columna2, .columna3 {
+  background-color: #eee;
+  width: 31%;
+  float: left;
+  margin: 1%;
+}
+
+li {
+  display: inline;
+  padding: 5px;
+}
+
+img {
+  float:none;
+}
+
+* {
+  margin:0px;
+  padding:0px;
+}
+#columna1 {
+  position:relative;
+  top:0px;
+  left:0px;
+  width:200px;
+  margin-top:10px;
+  background-color:#ffff55;
+}
+#columna2 { 
+  position:absolute;
+  margin-left:220px;
+  margin-right:20px;
+  margin-top:10px;  
+  background-color:#ffffbb;
+}
+
+#caja1,#caja2,#caja3 {
+  background-color:#f99;
+  font-family:verdana;
+  font-size:1.3em;
+}
+#caja2 {
+  position:relative;
+  left:15px;
+  top:5px;
+}
+
+#cabecera {
+  width:50%;  
+  height:100px;
+  background-color:#ffee00;
+  color:#0000aa;
+  text-align:center;
+  font-family:Times New Roman;
+  font-size:35px;
+  font-weight:bold; 
+}
+
+.classp {
+  background-color:#ffffaa;
+  margin:1px;
+}
+
+#menuhorizontal {
+  float:left;
+  width:100%;
+  padding:0px;
+  margin:0px;
+  list-style-type:none;
+}
+#menuhorizontal a {
+  float:left;
+  width:100px;
+  text-decoration:none;
+  text-align:center;
+  color:#ff0000;
+  background-color:#f7f8e8;
+  padding:3px 5px;
+  border-right:1px solid white;
+}
+#menuhorizontal a:hover {
+  background-color:#336699;
+}
+#menuhorizontal li {
+  display:inline;
+}
+
+.classh1 {
+    color:#0000aa;
+    margin:0px;
+    padding:0px;
+}
+
+.codigofuente {
+  font-family:Courier;
+  font-size:12px;
+  background-color:#ffffcc;
+  border-width:1px;
+  border-style:dotted;
+  border-color:#ffaa00;
+
+  padding:20px;
+  padding-top:40px;
+  padding-right:40px;
+  padding-bottom:40px;
+  padding-left:40px;
+}
+
+.titulopagina {
+  background-color:#ffffcc;
+  text-align:center;
+  font-family:verdana;
+  font-size:30px;
+
+  border-top-width:5px;
+  border-right-width:3px;
+  border-bottom-width:3px;
+  border-left-width:3px;
+
+  border-top-style:dotted;
+  border-right-style:solid;
+  border-bottom-style:solid;
+  border-left-style:dotted;
+
+  border-top-color:#ffaa00;
+  border-right-color:#ff0000;
+  border-bottom-color:#ff0000;
+  border-left-color:#ffaa00;
+}

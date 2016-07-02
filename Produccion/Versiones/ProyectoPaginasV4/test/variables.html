@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+<meta content="jquery, forumlario dinamico, timersys, tutorial, ajax" name="keywords"/>
+
+<title>Timersys </title>
+<script type="text/javascript" src="../jquery.js"></script>
+
+</head>
+<body>
+<script language="javascript"> 
+//Su explorador no soporta java o lo tiene deshabilitado; esta pagina necesita javascript para funcionar correctamente<!-- 
+//Copyright © McAnam.com 
+
+//coge una variable dada(por su número empezando desde 0 o su nombre)             
+function cogerVariable(variable){ 
+             
+    var tipo = typeof variable; 
+    var direccion = location.href; 
+                 
+    if (tipo == "string"){ 
+        var posicion = direccion.indexOf("?"); 
+        posicion = direccion.indexOf(variable,posicion) + variable.length; 
+    } 
+    else if (tipo == "number"){ 
+        var posicion=0; 
+        for (var contador = 0 ; contador < variable + 1 ; contador++){ 
+            posicion = direccion.indexOf("=",++posicion); 
+            if (posicion == -1)posicion=999; 
+        } 
+    } 
+    if (direccion.charAt(posicion) == "="){ 
+        var final = direccion.indexOf("&",posicion); 
+        if (final == -1){final=direccion.length;}; 
+        return direccion.substring(posicion + 1,final); 
+    } 
+} 
+
+//Da la cantidad de elementos empezando desde 0 
+function contarVariables(){ 
+                 
+    var direccion = self.location.href; 
+    var posicion = direccion.indexOf("?"); 
+                 
+    for (var contador = -1 ; posicion != -1 ; ++contador){ 
+        posicion = direccion.indexOf("=",++posicion); 
+    } 
+                 
+    if (contador < 0)contador=0; 
+                 
+    return contador; 
+} 
+
+//da el nombre de una variable 
+function nombreVariable(variable){ 
+
+    var tipo = typeof variable; 
+    var direccion = location.href; 
+                 
+    if (tipo == "string"){ 
+        var posicion = direccion.indexOf("?"); 
+        if ((posicion > 0) && (direccion.indexOf(variable,posicion) > -1)) 
+            posicion = direccion.indexOf(variable,posicion); 
+        else 
+            posicion = 0; 
+    } 
+    else if (tipo == "number"){ 
+        var posicion = 0; 
+        posicion = direccion.indexOf("?"); 
+        for (var contador = 0 ; ((contador < variable) && (posicion != -1)) ; contador++){ 
+            posicion = direccion.indexOf("&", ++posicion); 
+        } 
+        posicion++; 
+    } 
+    if (posicion > 0){ 
+        var final = direccion.indexOf("=",posicion); 
+        //alert(posicion + " , " + final); 
+        if (final == -1){final=direccion.length;}; 
+        return direccion.substring(posicion,final); 
+    } 
+     
+} 
+
+//--> 
+</script>
+<p> 
+    <input type="button" onclick="alert('Esta página tiene: '+contarVariables()+' variables')" value="Cuantas variables tiene esta página"> 
+</p>
+<div name="contenedor" id="contenedor"></div>
+<div id="variables"></div>
+</body>
+</html>

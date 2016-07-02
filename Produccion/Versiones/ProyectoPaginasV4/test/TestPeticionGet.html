@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+<meta content="jquery, forumlario dinamico, timersys, tutorial, ajax" name="keywords"/>
+
+<title>Timersys </title>
+<script type="text/javascript" src="../jquery.js"></script>
+
+</head>
+<body>
+
+ <div id="header">
+	<a href="variables.html?var=texto" target="_blank">Se pasa una variable</a> 
+	<a href="variables.html?uno=1&dos=2&tres=3" target="_blank">Se pasan tres variables</a>
+</div>
+
+<div id="stylized" class="myform" style="margin:20px auto;width:200px;">
+
+<form id="myForm" action="variables.html" method="post" style="height:200px;"> 
+    <label>Nombre:</label> <input type="text" name="name" /> 
+    <label>Mensaje:</label> <textarea name="mensaje"></textarea> 
+    <input type="submit" value="Enviar" /> 
+	<div id="ajax_loader">naadaa</div>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+La etiqueta div
+
+    * Maquetación de una página web
+          o Recurso TIC: Maquetación
+                + La etiqueta div
+                + Maquetación de una página web
+                + División en columnas
+                + Resumen
+                + Actividades y ejemplos
+          o Aplicación al aula
+                + Planificación
+                + Sugerencias metodológicas
+                + Atención a la diversidad
+
+La etiqueta <div> se emplea para definir un bloque de contenido o sección de la página, para poder aplicarle diferentes estilos e incluso para realizar operaciones sobre ese bloque específico.
+
+El uso de la etiqueta div es sencillo. Observemos este ejemplo:
+
+    <div>
+    <h1>Índice</h1>
+    Página principal<br />
+    Material multimedia<br />
+    Autores<br />
+    </div>
+
+Hemos empleado la etiqueta para crear un bloque, que hará las veces de índice de contenidos. Visualmente la etiqueta no provoca ningún cambio, pero en la estructura interna del documento hemos aplicado una división muy importante. La figura muestra el texto del ejemplo; no hay ninguna diferencia visible.
+
+Probemos ahora a aplicar una modificación a la apariencia de ese bloque, añadiendo un estilo de borde a la etiqueta <div>; quedaría así:
+
+    <div style="border: 2px solid rgb(204, 102, 204);">
+    <h1>Índice</h1>
+    Página principal<br />
+    Material multimedia<br />
+    Autores<br />
+    </div>
+
+Observemos de nuevo la figura; ahora sí que aparece un borde sólido de 2 píxeles alrededor de todo el espacio definido por la etiqueta div.
+
+Eso es todo lo que necesitamos saber: la etiqueta <div> configura espacios dentro de la página.
+La etiqueta span
+
+Después de un </div> se comienza con una nueva línea. Esa es una de las diferencias principales con la otra etiqueta que empleamos para diferenciar contenidos, la etiqueta <span>. Con ella conseguimos un efecto similar, pero en el interior de un párrafo. Recordemos que span se emplea con frecuencia para aplicar estilos en el interior de un bloque de texto.
+Diferenciando las etiquetas div y span
+
+Adicionalmente, las etiquetas div y span se suelen acompañar de uno o dos parámetros destinados a identificar ese bloque:
+
+    * id: permite establecer un identificador único para el bloque. Así podremos referirnos al bloque de forma inequívoca.
+    * class: es similar a id, pero con la ventaja de que se puede repetir; así que podemos tener varios <div> diferentes con la misma clase.
+
+Usando id y class podemos diferenciar unos div de otros y así aplicarles estilos CSS diferentes o hacer que actúen de forma distinta.
+
+Las etiquetas id y class se utilizan como se muestra en el ejemplo:
+
+    <div id="indice">
+    <br>índice
+    </div>
+    <div class="destacado">
+    Este texto se destaca mediante un estilo.
+    </div>
+    <div id="articulo15" class="articulos_estandar">
+    Texto de un artículo
+    </div>
+
+Como se puede apreciar, las etiquetas id y class se pueden mezclar. Se mantiene siempre esa norma: los id son únicos dentro de una página, mientras que los class se suelen repetir para que varios elementos tomen un mismo estilo.

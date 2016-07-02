@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+Access-Control-Allow-Origin: *
+<title>Problema</title>
+<!--
+header('Access-Control-Allow-Origin: *');
+<link rel="StyleSheet" href="estilos.css" type="text/css">
+-->
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/JsonReader.js"></script>
+<script type="text/javascript" src="funcionjson.js"></script>
+<script type="text/javascript" src="funcionesGetData.js"></script>
+<script type="text/javascript" src="peticiones.js"></script>
+</head>
+<body>
+Ingrese dni (solo existen los valores 1,2 y 3):<input type="text" 
+name="dni" id="dni" size="10"><br>
+
+<input type="button" value="open pages" id="botonOpen">
+<input type="button" value="open pages" id="botonpeticion">
+<br>
+<br>
+<br>
+
+<input type="button" value="Enviar" id="boton1">
+<input type="button" value="TXT" id="botontxt">
+<br>
+<input type="button" value="Leer Archivo JSon" id="ajaxjson">
+<br>
+<input type="button" value="Cadena Json OK" id="CadenaJsonOK">
+<br>
+<input type="text" value="Data/xTarea.json" id="tajaxjsonOK">
+<input type="button" value="Ajax Json OK" id="ajaxjsonOK">
+
+<div id="resultados"></div>
+</body>
+</html> 

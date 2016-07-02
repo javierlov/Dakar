@@ -1,0 +1,85 @@
+* {
+margin: 0;
+padding: 0;
+}
+
+#localidad1, #localidad2, #localidad3, #localidad4,
+#localidad5, #localidad6, #localidad7, #localidad8 {
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1.5;
+	font-family: Arial, sans-serif;
+	
+	padding-left: 18px;
+	margin-left: 32px;
+	
+	height: 32px;
+	width:32px;
+	line-height: 32px;
+	background-image: url("imagenes/cuadroscolores1.png");
+	background-repeat: no-repeat;
+}
+
+#minimap{
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1.5;
+	font-family: Arial, sans-serif;
+	
+	padding-left: 18px;
+	margin-left: 32px;
+	
+	height: 100%;
+	width:100%;
+	line-height: 32px;
+	background-image: url("imagenes/minimap1.png");
+	background-repeat: no-repeat;	
+}
+
+#columna1, #columna2, #columna3 {
+	padding-bottom: 32px;
+	margin-bottom: -32px;
+	display: table-row;
+}
+
+#contenedor {
+	border: thick solid #000;
+	width: 98%;
+	overflow: hidden;
+	display: table;
+}
+
+
+#contenidos {
+	display: table-row;
+}
+
+#localidad1 {
+	background-position: 0 0;
+}
+#localidad2 {
+	background-position: 0 -32px;
+}
+#localidad3 {
+	background-position: 0 -64px;
+}
+#localidad4 {
+	background-position: 0 -96px;
+}
+
+#localidad5 {
+	background-position: 0 -128px;
+}
+#localidad6 {
+	background-position: 0 -160px;
+}
+#localidad7 {
+	background-position: 0 -192px;
+}
+#localidad8 {
+	background-position: 0 -224px;
+}

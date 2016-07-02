@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <title>Example 2</title>
+</head>
+
+<body>
+  <h1>Example 2</h1>
+  <script>
+    function requiredFeaturesSupported() {
+      return ( BlobConstructor() && msSaveOrOpenBlobSupported() );
+    }
+    
+    function BlobConstructor() {
+      if (!window.Blob) {
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>The Blob constructor is not supported - upgrade your browser and try again.</h1>";
+        return false;
+      } // if
+      
+      return true;
+    } // BlobConstructor
+    
+    function msSaveOrOpenBlobSupported() {
+      if (!window.navigator.msSaveOrOpenBlob) { // If msSaveOrOpenBlob() is supported, then so is msSaveBlob().
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>The msSaveOrOpenBlob API is not supported - try upgrading your version of IE to the latest version.</h1>";            
+        return false;
+      } // if
+      
+      return true;
+    } // msSaveOrOpenBlobSupported
+        
+    if (requiredFeaturesSupported()) {
+      var blobObject = new Blob(["I scream. You scream. We all scream for ice cream."]);
+      
+      window.navigator.msSaveBlob(blobObject, 'msSaveBlob_testFile.txt');
+      alert('File save request made using msSaveBlob() - note the single "Save" button below.');
+      
+      var fileData = ["Before you insult a person, walk a mile in their shoes. That way, when you insult them, you'll be a mile away - and have their shoes."];
+      blobObject = new Blob(fileData);
+      window.navigator.msSaveOrOpenBlob(blobObject, 'msSaveBlobOrOpenBlob_testFile.txt');
+      alert('File save request made using msSaveOrOpenBlob() - note the two "Open" and "Save" buttons below.');
+    }
+  </script>
+</body>
+
+</html>

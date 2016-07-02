@@ -1,0 +1,35 @@
+!DOCTYPE html>
+<html>
+<head>
+<title>Problema</title>
+<script src="../../js/json.js" language="JavaScript"></script>
+<script src="../../js/jquery.js" language="JavaScript"></script>
+<script src="../../js/jsonreader.js" language="JavaScript"></script>
+<script src="AAA_arrayjson.js" language="JavaScript"></script>
+</head>
+
+<body>
+	<h2> Convertir un objeto JavaScript a formato JSON </h2>
+	<input type="button" value="Convertir" id="boton1">
+	<input type="button" value="Mensaje" id="btnjq">
+	<input type="button" value="Leer txt" id="btnleertxt">
+	<br> 	<div id="datos"> datos </div>
+	<br> 	<div id="Cargadatos"> datos </div>
+	<br>
+	<div id="resultados"> resultados </div>
+	<br>
+	<input id="fileInput" type="file" size="50" onchange="processFiles(this.files)">
+	<div id="fileOutput"> output </div>
+	<br>
+	
+	<input type="BUTTON" name="boton_guarda" value="Guardar en disco" 
+		onclick="javascript:document.execCommand('SaveAs','true','tu_archivo.txt')">
+	<br>
+	
+	<p unselectable="on">Select any portion of the following blue text, such as &quot;My 
+	favorite Web site&quot;. Click the button to turn the selected text into a link. </p>
+	<p style="color= #3366CC">My favorite Web site is worth clicking on. Don't forget 
+	to check out my favorite music group!</p>
+	
+</body>
+</html>

@@ -1,0 +1,68 @@
+
+p {
+font-style: normal;
+font-variant: small-caps;
+font-weight: bold;
+font-size: 1.5em;
+line-height: 1.5;
+font-family: Arial, sans-serif;
+
+}
+
+div {
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	padding-top: 4px;
+	padding-right: 4px;
+	padding-bottom: 4px;
+	padding-left: 4px;
+}
+
+h1 {
+	background-color: #FFFFFF;
+	.background-image: url("imagenes/icono.png");
+	background-repeat: no-repeat;
+	background-position: 10px 5px;
+}
+
+#contenedor {
+	border: thick solid #000;
+	width: 98%;
+	overflow: hidden;
+	display: table;
+}
+#izquierda {
+	float: left;
+	width: 210px;
+	border: thick solid #000;
+}
+#derecha {
+	float: right;
+	width: 75%;
+	border: thick solid #000;
+}
+
+#contenidos {
+	display: table-row;
+}
+
+#columna1, #columna2, #columna3 {
+	padding-bottom: 32px;
+	margin-bottom: -32px;
+	display: table-row;
+}
+
+
+#botonmenu{
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1.5;
+	font-family: Arial, sans-serif;
+	height: 40px;
+	width:200px;
+}
+

@@ -1,0 +1,78 @@
+<html>
+<head> </head>
+<body>
+
+<script type="text/javascript" src="../js/Pagina.js"></script>
+
+<script type="text/javascript">
+
+ window.addEventListener('load', inicio, false);
+
+ //----------------------------------------------------------
+	// define la clase Person
+	function Person() {
+		this.name = 'sin nombre';
+		this.edad = 22;
+	}
+
+	Person.prototype.walk = function(){
+		document.write('camino solo');
+		document.write('<br>');
+	  };
+	  
+	Person.prototype.sayHello = function(){
+	  document.write('sayHello - padre - hola');
+	  document.write('<br>');
+	};
+//----------------------------------------------------------
+	// define la clase Student
+	function Student() {
+	  // Llama al constructor primario
+	  Person.call(this);
+	}
+
+	// hereda Person
+	Student.prototype = new Person();
+
+	// corrige el puntero del constructor porque apunta a Person
+	Student.prototype.constructor = Student;
+	 
+	// reemplaza el método sayHello
+	Student.prototype.sayHello = function(){
+	  document.write('sayHello - hola, soy estudiante');
+	  document.write('<br>');
+	}
+	
+	// reemplaza el método walk
+	Student.prototype.walk = function(){
+	  document.write('walk - estudiante - mas rapido');
+	  document.write('<br>');
+	}
+
+	// agrega el método sayGoodBye
+	Student.prototype.sayGoodBye = function(){
+	  document.write('adios');
+	  document.write('<br>');
+	}
+//----------------------------------------------------------
+	
+	function inicio(){		
+		var student1 = new Student();
+		student1.name = 'student1';
+		
+		student1.walk();
+		student1.sayHello();
+		student1.sayGoodBye();
+		document.write('<br>----------------------');
+		document.write('<br>'); document.write(student1.name); // true  
+		document.write('<br>'); document.write(student1.edad); // true  
+
+		// comprueba la herencia
+		document.write('<br>'); document.write(student1 instanceof Person); // true  		
+		document.write('<br>'); document.write(student1 instanceof Student); // true
+		
+	}	
+</script>
+
+</body>
+</html>

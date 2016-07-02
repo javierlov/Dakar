@@ -1,0 +1,31 @@
+{
+    "proyecto": [
+        {
+            "Materia": "Matematica","Curso": "Primero","Division": "A","Escuela": "Numero 1","Tema": "Calculo"
+        },
+        {
+            "tarea": [
+                {
+                    "paginas": [
+                        {                            
+                            "opciones": [-1]
+                        },{
+                            "opciones": [1]
+                        },
+						{
+                            "opciones": [1]
+                        },
+                        {
+                            "opciones": [3,7]
+                        },
+                        {                            
+                            "opciones": [-1]
+                        },{
+                            "opciones": [-1]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

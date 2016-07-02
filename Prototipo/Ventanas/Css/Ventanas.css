@@ -1,0 +1,100 @@
+BODY
+{
+    BACKGROUND-COLOR: #efe;
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    
+}
+
+
+/*Clases para index ventanas*/
+.Main_styleCentro{
+	text-align:center;
+	margin: 20px 0px; 
+	
+	height:auto; 
+	width:auto;
+	border:0px solid #000
+}
+
+.Main_style{
+	text-align:center;
+	border:0px solid #000;
+	background:none;
+
+	border-radius: 0px;
+	margin: 10px 0px; 
+	
+	height:auto; 
+	width:auto;	
+}
+
+.titlePrint
+{
+    background-color: cyan;
+    FONT-FAMILY: Tahoma;
+    FONT-SIZE: 18px;
+	height:auto; 
+	width:auto;	
+}
+	
+.TarjetaPrint
+{
+    top:0px;
+	background-color: yellow;
+    font-family: tahoma;
+    font-size: 18px;
+	height:auto; 
+	width:235px;	
+}
+	
+/*--------table----------*/
+.contenedorTable{
+	display: table;
+	box-sizing:border-box;
+	
+	margin-left: auto; 
+	margin-right: auto;
+	
+	width:auto;	
+	width:100%;	
+	
+	height:1%;
+	padding: 2px;
+}
+
+.contenedorFila{
+	display: table-row;
+	
+	width:100%;	
+	padding:0px;
+	border:0px;
+	margin:0px;
+}
+.contenedorColumn{
+	display: table-cell;
+	color: blue;
+	
+	border:1px solid blue;
+	padding:0px;
+	margin:0px;
+	width:20%;	
+	height:120px;
+	
+	opacity:1.0;
+	font-family: Tahoma;
+    font-size: 21px;
+    font-style: normal;
+}
+
+
+.cubos
+{
+	float:left;
+	border:1px solid black;
+	background-color:#DDDDDD;
+	width:25px;
+	margin:25px;
+	text-align:center;
+}

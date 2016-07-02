@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<estudiantes>
+<estudiante>
+<nombre>Juan Mauricio</nombre>
+<edade>18</edade>
+<telefono>565-546-4567</telefono>
+<carnet>444-33-4534</carnet>
+</estudiante>
+<estudiante>
+<nombre>Maria Jimena</nombre>
+<edade>21</edade>
+<telefono>714-777-1234</telefono>
+<carnet>453-34-9454</carnet>
+</estudiante>
+<estudiante>
+<nombre>Angela Espinoza</nombre>
+<edade>19</edade>
+<telefono>786-564-5464</telefono>
+<carnet>555-66-7841</carnet>
+</estudiante>
+<estudiante>
+<nombre>Pedro Selva</nombre>
+<edade>22</edade>
+<telefono>679-233-2675</telefono>
+<carnet>122-67-3456</carnet>
+</estudiante>
+</estudiantes>

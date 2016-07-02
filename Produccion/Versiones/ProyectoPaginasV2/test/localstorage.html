@@ -1,0 +1,73 @@
+	<!DOCTYPE HTML>
+
+	<html>
+		<head>
+			<TITLE>HTML5 local storage tester (testbed)</TITLE>
+		</head>
+		<body>
+			<div id="output_area" 
+			style="position:relative;width:100%;height:200px;overflow:auto;
+			border: dotted 1px #ff0000;">
+			</div>
+
+			<div>
+				<input id="local_storage_key" type="text" />
+				<input id="local_storage_value" type="text" />
+			</div>
+
+			<div>
+				<input type="button" value="load" onclick="load_local();"/>
+				<input type="button" value="store" onclick="store_local();"/>
+			</div>
+			<script id="this_page_js" type="text/javascript">
+
+			/* store some string data to local storage
+				This is using some text input elements on the page
+				for input.*/
+
+			function store_local(domid_prefix){
+				var keyinput = document.getElementById('local_storage_key').value;
+				var valinput = document.getElementById('local_storage_value').value;
+				try{
+					if(typeof(window.localStorage) != 'undefined'){
+					window.localStorage.setItem(keyinput,valinput);
+					}
+					else{
+						throw "window.localStorage, not defined";
+					}
+				}
+				catch(err){
+					output_str("store_local,error," + err);
+				}
+			}
+
+			/* load some string data from local storage
+				This is using some text input elements on the page
+				for the key name input and value output.*/
+
+			function load_local(domid_prefix){
+				var keyinput = document.getElementById('local_storage_key').value;
+			  var valoutput = document.getElementById('local_storage_value');
+			  try {
+				if(typeof(window.localStorage) != 'undefined') {
+				  valoutput.value = window.localStorage.getItem(keyinput);
+				}
+				else {
+				  throw "window.localStorage, not defined";
+				}
+			  }
+			  catch(err) {
+				output_str("store_local,error," + err);
+			  }
+			}
+
+			/* function to print to the debug area */
+
+			function output_str(str){
+				var da = document.getElementById("output_area");
+				da.innerHTML += str + "<br/>";
+				da.scrollTop = da.scrollHeight;
+			}
+			</script>
+		 </body>
+	</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <title>Example 3</title>
+  <style>
+    html { 
+     -ms-touch-action: none; /* Capture all touch events for our own purposes. */
+     text-align: center;
+    }
+  
+    #hideWrapper { 
+      display: none; /* Do not show the file picker dialog until we're ready to do so. */
+    }    
+  </style>
+</head>
+
+<body>
+  <h1>Example 3</h1>
+  <canvas id="drawingSurface" width="500" height="500" style="border:1px solid black;">
+  </canvas> <!-- The canvas element can only be manipulated via JavaScript -->
+  <div>
+    <button id="erase">Erase</button>
+    <button id="save">Save</button>
+    <button id="load">Load</button>
+  </div>  
+  <div id="hideWrapper">
+    <p>Select one of your saved canvas drawings to display:</p>
+    <input type="file" id="fileSelector" /> <!-- By design, if you select the exact same files two or more times, the 'change' event will not fire. -->
+  </div>    
+  <script>
+    function requiredFeaturesSupported() {
+      return ( 
+               BlobConstructorSupported() && 
+               msSaveOrOpenBlobSupported() && 
+               canvasSupported() && 
+               fileApiSupported()
+             );
+    } // requiredFeaturesSupported
+    
+    function BlobConstructorSupported() {
+      if (!window.Blob) {
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>The Blob constructor is not supported - upgrade your browser and try again.</h1>";
+        return false;
+      } // if
+      
+      return true;
+    } // BlobConstructorSupported
+    
+    function msSaveOrOpenBlobSupported() {
+      if (!window.navigator.msSaveOrOpenBlob) { // If msSaveOrOpenBlob() is supported, then so is msSaveBlob().
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>The msSaveOrOpenBlob API is not supported - upgrade Internet Explorer and try again.</h1>";            
+        return false;
+      }
+      
+      return true;
+    } // msSaveOrOpenBlobSupported
+        
+    function canvasSupported() {
+      if (!document.createElement('canvas').getContext) {
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>Canvas is not supported - upgrade your browser and try again.</h1>";                  
+        return false;
+      }
+      
+      return true;
+    } // canvasSupported  
+    
+    function fileApiSupported() {
+      if (document.getElementById('fileSelector').files && window.FileReader) {
+        return true;        
+      }
+      else {
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>The File API is not sufficiently supported - upgrade your browser and try again.</h1>";            
+        return false;      
+      }
+    } // fileSelectorSupported      
+        
+    //if ( requiredFeaturesSupported() ) {    
+	if ( 1 == 1 ) {    
+      var canvas = document.getElementById('drawingSurface'); // A static variable, due to the fact that one or more local functions access it.
+      var context = canvas.getContext('2d'); // A static variable, due to the fact that one or more local functions access it.
+
+      context.fillStyle = "purple"; // Because purple is cool.
+
+      if (window.navigator.msPointerEnabled) {
+        canvas.addEventListener('MSPointerMove', paintCanvas, false);
+      }
+      else {
+        canvas.addEventListener('mousemove', paintCanvas, false);
+      }
+
+      document.getElementById('erase').addEventListener('click', eraseCanvas, false);
+      document.getElementById('save').addEventListener('click', saveCanvas, false);
+      document.getElementById('load').addEventListener('click', loadCanvas, false);
+      
+      document.getElementById('fileSelector').addEventListener('change', handleFileSelection, false); // Add an onchange event listener for the <input id="fileSelector"> element.      
+    } // if ( requiredFeaturesSupported() )
+    
+    function paintCanvas(event) { // The "event" object contains the position of the pointer/mouse.
+      context.fillRect(event.offsetX, event.offsetY, 4, 4); // Draw a 4x4 rectangle at the given coordinates (relative to the canvas box). As of this writing, not all browsers support offsetX and offsetY.
+    }
+
+    function saveCanvas() {
+      var drawingFileName = "canvas" + Math.round( (new Date()).getTime() / 1000 ) + ".txt"; // Produces a unique file name every second.
+      var blobObject = new Blob( [canvas.toDataURL()] ); // Create a blob object containing the user's drawing.
+      
+      window.navigator.msSaveBlob(blobObject, drawingFileName); // Copy the blob object content and save it to a file.
+      document.getElementById('hideWrapper').style.display = 'none'; // Remove the file picker dialog from the screen if the Save button gets clicked.      
+    } // saveCanvas
+
+    function eraseCanvas() {
+      context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      document.getElementById('hideWrapper').style.display = 'none'; // Remove the file picker dialog from the screen if the Erase button gets clicked.
+    } // eraseCanvas
+
+    function loadCanvas() {
+      document.getElementById('hideWrapper').style.display = 'block'; // Unhide the file picker dialog so the user can select a saved canvas drawing to load into the canvas element.   
+    } // loadCanvas      
+    
+    function handleFileSelection(evt) {    
+      var files = evt.target.files; // The file selected by the user (as a FileList object).
+
+      if (!files) {
+        alert("The selected file is invalid - do not select a folder. Please reselect and try again.");
+        return;
+      }
+
+      // "files" is a FileList of file objects. Try to display the contents of the selected file:
+      var file = files[0]; // The way the <input> element is set up, the user cannot select multiple files.
+      
+      if (!file) {
+        alert("Unable to access " + file.name.toUpperCase() + "Please reselect and try again."); 
+        return;
+      }
+      if (file.size == 0) {
+        alert("Unable to access " + file.name.toUpperCase() + " because it is empty. Please reselect and try again.");
+        return;
+      }
+      if (!file.type.match('text/.*')) {
+        alert("Unable to access " + file.name.toUpperCase() + " because it is not a known text file type. Please reselect and try again.");
+        return;
+      }
+      
+      // Assert: we have a valid file.
+      
+      startFileRead(file); // Asychronously fire off a file read request.      
+      document.getElementById('hideWrapper').style.display = 'none'; // Remove the file picker dialog from the screen since we have a valid file.      
+    } // handleFileSelection
+    
+    function startFileRead(fileObject) {
+      var reader = new FileReader(); //
+
+      // Set up asynchronous handlers for file-read-success, file-read-abort, and file-read-errors:
+      reader.onloadend = displayDrawing; // "onloadend" fires when the file contents have been successfully loaded into memory.
+      reader.abort = handleFileReadAbort; // "abort" files on abort.
+      reader.onerror = handleFileReadError; // "onerror" fires if something goes awry.
+
+      if (fileObject) { // Safety first.
+        reader.readAsText(fileObject); // Asynchronously start a file read thread. Other supported read methods include readAsArrayBuffer() and readAsDataURL().
+      }
+      else {
+        alert("fileObject is null in startFileRead().");
+      }
+    } // startFileRead
+    
+    function displayDrawing(evt) {
+      var img = new Image(); // The canvas drawImage() method expects an image object.
+  
+      img.src = evt.target.result; // Obtain the file contents, which was read into memory (whose format is a text data URL string).
+      // eraseCanvas(); To allow composite drawings, remove this comment.
+      img.onload = function() { // Only render the saved drawing when the image object has fully loaded the drawing into memory.
+        context.drawImage(img, 0, 0); // Draw the image starting at canvas coordinate (0, 0) - the upper left-hand corner of the canvas.
+      } // img.onload */
+    } // displayFileText
+      
+    function handleFileReadAbort(evt) {
+      alert("File read aborted.");
+    } // handleFileReadAbort
+
+    function handleFileReadError(evt) {
+      switch (evt.target.error.name) {
+        case "NotFoundError":
+          alert("The file could not be found at the time the read was processed.");
+          break;
+        case "SecurityError":
+          alert("A file security error occured.");
+          break;
+        case "NotReadableError":
+          alert("The file cannot be read. This can occur if the file is open in another application.");
+          break;
+        case "EncodingError":
+          alert("The length of the data URL for the file is too long.");
+          break;
+        default:
+          alert("File error code " + evt.target.error.name);
+      } // switch
+    } // handleFileReadError
+  </script>
+</body>
+
+</html>

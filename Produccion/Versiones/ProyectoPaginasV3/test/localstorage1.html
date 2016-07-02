@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<TITLE>HTML5 local storage tester (testbed)</TITLE>
+	</head>
+		
+	<script type="text/javascript" src="../jquery.js"></script>	
+	<script type="text/javascript" src="localstorage1.js"></script>	
+	
+	
+	<script type="text/javascript"> 
+		window.addEventListener('buton1', inicio, false);
+		
+		function inicio()
+		{
+				alert('buton 1');
+		}
+		//style="position:relative;width:100%;height:50px;overflow:auto;border: dotted 1px #ff0000;"
+	</script>	
+	<body>
+	
+		<div id="output_area" cols="50" rows="5">
+		</div>
+		
+		<textarea id="texta" name="comentarios" cols="20" rows="2">Agrego datos
+			nuevos</textarea>
+				
+		<div>
+			<input id="clave1" type="text" value="vacio" />
+			<input id="valor1" type="text" value="1" />
+		</div>
+
+		<div>
+			<input type="button" value="AlmacenaValor" id="AlmacenaValor"/>
+			<input type="button" value="RecuperarValor" id="RecuperarValor"/>
+			<input type="button" value="EliminarValor" id="EliminarValor"/>
+			<input type="button" value="BorrarValor" id="BorrarValor"/>
+			<input type="button" value="Consulta" id="Consulta"/>
+			<br/>
+			<input type="button" value="CrearBase" id="CrearBase"/>
+			<input type="button" value="InsertData" id="InsertData"/>
+			<input type="button" value="InsertValues" id="InsertValues"/>
+			<input type="button" value="ConsultaValores" id="ConsultaValores"/>
+			<br/>
+			<input type="button" value="CrearBaseInsertDatos" id="CrearBaseInsertDatos"/>			
+			<input type="button" value="ConsultaValoresPROD" id="ConsultaValoresPROD"/>
+			<br/>
+				
+			<input type="button" value="Obtener el texto contenido en un parrafo" id="boton1"><br>
+			<p id="parrafo1">Texto del primer parrafo</p>
+		
+		</div>
+		
+		<div id="status">	</div>
+
+	 </body>
+</html>

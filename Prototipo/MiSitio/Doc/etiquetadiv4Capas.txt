@@ -1,0 +1,227 @@
+
+Capas en HTML. Etiquetas DIV y SPAN. Ejemplos uso. Maquetar estructura a las páginas WEB. (CU00726B)
+
+Escrito por Enrique González
+Resumen: Entrega nº26 del Tutorial básico del programador web: HTML desde cero.
+Codificación aprenderaprogramar.com: CU00726B
+
+ 
+
+ 
+
+CAPAS EN HTML
+
+ 
+
+Las capas son unos recuadros, espacios rectangulares o “contenedores” que pueden colocarse en cualquier parte de la página. En ellas, podemos insertar contenido HTML. Su utilidad principal es visual, permitiendo organizar y dar estructura y diseño a las páginas HTML.
+
+ 
+
+ 
+
+ETIQUETA DIV
+
+ 
+
+Podemos insertar una capa a través de las etiquetas <div> y </div>
+
+ 
+
+A través del atributo style se establecen las propiedades de la capa.
+
+ 
+
+Imaginemos que queremos crear una página web con 3 partes diferenciadas: cabecera, cuerpo y pie. Crea un archivo html con el siguiente código y visualízalo en tu navegador.
+
+ 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+
+<title>Ejemplo etiqueta div - aprenderaprogramar.com</title>
+
+</head>
+
+<body>
+
+<div >
+
+Cabecera de la página.
+
+</div>
+
+<div >
+
+Cuerpo de la página.
+
+</div>
+
+<div >
+
+Pie de la página
+
+</div>
+
+</body>
+
+</html>
+
+ 
+
+ 
+
+ 
+
+Como podemos observar, hemos creado 3 capas (rectángulos) cada una con un borde de distinto color. Y lo más importante, le hemos dado estructura a la página y un diseño muy sencillo y básico.
+
+ 
+
+Ahora si queremos cambiar los estilos de la cabecera, al tener bien definida y estructurada la página HTML en capas, simplemente realizamos el siguiente cambio:
+
+ 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+
+<title>Ejemplo etiqueta div - aprenderaprogramar.com</title>
+
+</head>
+
+<body>
+
+<div>
+
+Cabecera de la página.
+
+</div>
+
+<div>
+
+Cuerpo de la página.
+
+</div>
+
+<div>
+
+Pie de la página
+
+</div>
+
+</body>
+
+</html>
+
+ 
+
+ 
+
+ 
+
+Escribe el código anterior, guárdalo en un archivo html y visualízalo en tu navegador.
+
+ 
+
+Hemos aumentado el tamaña de la fuente (letra) de la cabecera y, además, hemos centrado el texto, simplemente cambiando los estilos de la capa (div) que contenía a la cabecera.
+
+ 
+
+Por tanto, la principal utilidad de las capas, como ya mencionamos antes, es la de poder separar por partes la página HTML (estructurar) para que cada parte se comporte con un estilo diferente (diseño).
+
+ 
+
+ 
+
+ETIQUETA SPAN
+
+ 
+
+La etiqueta span al igual que cualquier etiqueta en HTML tiene su etiqueta de apertura <span> y su respectiva etiqueta de cierre </span>. ¿Qué utilidad tiene? La etiqueta span sirve para dar distintos estilos a los textos que se encuentren dentro de una misma capa (div).
+
+ 
+
+Imaginemos que en el ejemplo anteriormente mostrado, dentro de la cabecera cuya fuente es de color negro, quisiéramos añadir texto de distintos colores pero que ese texto perteneciera a la misma capa de la cabecera. Para ello, utilizaríamos la etiqueta span.
+
+ 
+
+Escribe el siguiente código, guárdalo en un archivo html y visualízalo en tu navegador.
+
+ 
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+
+<title>Ejemplo etiqueta span - aprenderaprogramar.com</title>
+
+</head>
+
+<body>
+
+<div>
+
+Cabecera
+
+<span>de</span> la <span>página</span>.
+
+</div>
+
+<div>
+
+Cuerpo de la página.
+
+</div>
+
+<div>
+
+Pie de la página
+
+</div>
+
+</body>
+
+</html>
+
+ 
+
+ 
+
+ 
+
+Como podemos observar, la utilidad principal de la etiqueta span es la de dar estilos a porciones de texto dentro de una misma capa (div).
+
+ 
+
+ 
+
+ACLARACIONES
+
+ 
+
+Para poder aprovechar todo el potencial de este par de etiquetas, deberíamos tener un buen conocimiento de maquetación, diseño y uso de hojas de estilos (CSS). En este curso estos temas no se van a tratar, aunque se mencionan de forma sencilla y simplificada. El verdadero potencial de estas etiquetas lo obtenemos cuando utilizamos herramientas más avanzadas como CSS avanzado, pero desde el punto de vista didáctico, lo adecuado es ir aprendiendo los aspectos más básicos para luego introducir los más complejos. No te preocupes por hacer páginas complejas en este momento.
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
+ 
+Para acceder a la información general sobre este curso y al listado completo de entregas pulsa en este link:  Ver curso completo.
+
+ 
+
+Para  hacer un comentario o consulta utiliza los foros aprenderaprogramar.com, abiertos a cualquier persona independientemente de su nivel de conocimiento.

@@ -1,0 +1,64 @@
+#botonSieguiente{ 
+top:80%;
+left:92%;
+padding:15px; 
+width:20px; 
+height:50px; 
+position:absolute;
+
+text-align:center;
+letter-spacing:5px;
+font-size:30px;
+text-transform:uppercase;
+
+background:-moz-linear-gradient(#f9f9f9 0%,#DADADA 100%);
+background:-ms-linear-gradient(#f9f9f9 0%,#DADADA 100%); 
+background:-o-linear-gradient(#f9f9f9 0%,#DADADA 100%); 
+background:-webkit-linear-gradient(#f9f9f9 0%,#DADADA 100%); 
+background:linear-gradient(#f9f9f9 0%,#DADADA 100%);
+border:solid 1px #DEDEDE; 
+border-radius:5px;
+color:#333; 
+} 
+#botonSieguiente:hover{
+background:-moz-linear-gradient(#fff 0%,#DEDEDE 100%);
+color:#999; 
+}
+
+#botonAnterior{ 
+top:80%;
+left:3%;
+padding:15px; 
+width:20px; 
+height:50px; 
+position:absolute;
+
+text-align:justify;
+letter-spacing:5px;
+font-size:30px;
+text-transform:uppercase;
+
+background:-moz-linear-gradient(#f9f9f9 0%,#DADADA 100%);
+background:-ms-linear-gradient(#f9f9f9 0%,#DADADA 100%); 
+background:-o-linear-gradient(#f9f9f9 0%,#DADADA 100%); 
+background:-webkit-linear-gradient(#f9f9f9 0%,#DADADA 100%); 
+background:linear-gradient(#f9f9f9 0%,#DADADA 100%);
+border:solid 1px #DEDEDE; 
+border-radius:5px;
+color:#333; 
+} 
+#botonAnterior:hover{
+background:-moz-linear-gradient(#fff 0%,#DEDEDE 100%);
+color:#999; 
+}
+
+h1 {
+font-family: "Book Antiqua";
+font-size: 100%;
+text-align: center;
+width: 100%;
+
+/*line-height: 1.1;
+margin: 1.49em 0;
+*/
+}

@@ -1,0 +1,66 @@
+{
+    "proyecto": [
+        {
+            "Materia": "Matematica","Curso": "Primero",
+"Division": "A",
+"Escuela": "Numero 1",
+"Tema": "Calculo"
+        },
+        {
+            "tarea": [
+                {
+                    "paginas": [
+                        {
+                            "titulo": "Fisica 3",
+                            "objetivos": ["Conceptos para Obtener la Fisica ", "Como obtener la Fisica ","Multiplicar por uno mismo"],
+                            "fechacreacion": "fech",
+                            "fechaentrega": "entrega",
+                            "calificacion": "calif",
+							"TipoPagina":"Inicio",
+                            "opciones": [1,2,3]
+                        },{
+                            "titulo": "¿Cual es la Fisica  de 9?",
+							"nombre": "juancito",
+                            "descripcion": "desc",                            
+                            "fechacreacion": "fech",
+                            "fechaentrega": "entrega",
+                            "calificacion": "calif",
+							"TipoPagina":"PreguntaOptionsText",
+                            "opciones": [1,2,3]
+                        },
+						{
+                            "titulo": "¿Cuales de estas opciones... es la Fisica  de 9?",
+							"nombre": "juancito",
+                            "descripcion": "desc",                            
+                            "fechacreacion": "fech",
+                            "fechaentrega": "entrega",
+                            "calificacion": "calif",
+							"TipoPagina":"PreguntaOptionsText",
+                            "opciones": [3,2,4]
+                        },
+                        {
+                            "titulo": "¿Cual es la Fisica  de 25?",
+							"nombre": "pepito",
+                            "descripcion": "desc",                            
+                            "fechacreacion": "fech",
+                            "fechaentrega": "entrega",
+                            "calificacion": "calif",
+							"TipoPagina":"PreguntaChecksText",
+                            "opciones": [1,3,5,7]
+                        },
+                        {
+                            "titulo": "Matemetricas",
+							"nombre": "pepito",
+                            "descripcion": "desc",                            
+                            "fechacreacion": "fech",
+                            "fechaentrega": "entrega",
+                            "calificacion": "calif",
+							"TipoPagina":"TituloTextoPagina",
+                            "opciones": ["¿Pueden hacer preguntas?","¿Quedaron Conceptos sin entender?","¿Puedo tomar metricas con este test?"]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Storing/Retrieving JavaScript Objects Using HTML5 Local Storage</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=10">    
+  </head>
+  <body>
+    <h1>Storing Objects using Local Storage</h1>
+    <h3>Example 3</h3>
+    <p></p>
+    <script>
+      if (!!window.localStorage) {
+        var person = { firstName: 'juan', lastName: 'perez' }; // Create a JavaScript object literal.
+
+        window.localStorage.person = JSON.stringify(person); // Convert the object to a string.
+        person = JSON.parse(window.localStorage.person); // Convert the object string back to a JavaScript object.
+
+        document.querySelector('p').innerHTML = "<strong>First Name:</strong> " + person.firstName + "<br /><strong>Last Name:</strong> " + person.lastName;
+      }
+      else {
+        document.querySelector('body').innerHTML = "<h2>Local storage is not supported by this browser.</h2><p>To use this application, upgrade your browser to the latest version.</p>";
+      }
+    </script>
+  </body>
+</html>
